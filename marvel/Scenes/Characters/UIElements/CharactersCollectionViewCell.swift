@@ -19,6 +19,7 @@ class CharactersCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         isSkeletonable = true
+        clipsToBounds = true
     }
     
     func update(item: CharactersPage.DisplayedCharacter) {

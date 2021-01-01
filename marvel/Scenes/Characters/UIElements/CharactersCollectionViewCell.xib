@@ -18,7 +18,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X1w-xF-Vk7" userLabel="FirstVerticalView">
                         <rect key="frame" x="0.0" y="0.0" width="150" height="97.5"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Uq-q4-GuZ">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GrootIcon" translatesAutoresizingMaskIntoConstraints="NO" id="6Uq-q4-GuZ">
                                 <rect key="frame" x="33.5" y="7.5" width="83" height="82.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="6Uq-q4-GuZ" secondAttribute="height" multiplier="1:1" id="CLG-db-muS"/>
@@ -71,7 +71,7 @@
                     <constraint firstItem="Ypi-JI-O7q" firstAttribute="leading" secondItem="iPK-dl-hfV" secondAttribute="leading" id="LbZ-DC-YTm"/>
                     <constraint firstItem="X1w-xF-Vk7" firstAttribute="leading" secondItem="iPK-dl-hfV" secondAttribute="leading" id="R6V-Gl-ZxK"/>
                     <constraint firstItem="Ypi-JI-O7q" firstAttribute="height" secondItem="iPK-dl-hfV" secondAttribute="height" multiplier="0.35" id="Zaq-TU-Mtx"/>
-                    <constraint firstItem="X1w-xF-Vk7" firstAttribute="height" secondItem="iPK-dl-hfV" secondAttribute="height" multiplier="0.65" id="fxg-Mf-ic6"/>
+                    <constraint firstItem="X1w-xF-Vk7" firstAttribute="height" relation="greaterThanOrEqual" secondItem="iPK-dl-hfV" secondAttribute="height" multiplier="0.65" id="fxg-Mf-ic6"/>
                     <constraint firstAttribute="trailing" secondItem="Ypi-JI-O7q" secondAttribute="trailing" id="qJn-yM-Uof"/>
                 </constraints>
             </collectionViewCellContentView>
@@ -91,5 +91,6 @@
     </objects>
     <resources>
         <image name="FavoritesIcon" width="25" height="25"/>
+        <image name="GrootIcon" width="19" height="25"/>
     </resources>
 </document>

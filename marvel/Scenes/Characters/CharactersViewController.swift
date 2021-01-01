@@ -214,10 +214,16 @@ private extension CharactersViewController {
         charactersCollectionView.delegate = self
         charactersCollectionView.dataSource = self
         charactersCollectionView.isSkeletonable = true
+        //flowLayout.estimatedItemSize = UICollectionViewFlowLayoutAutomaticSize
+        //charactersCollectionView.contentInsetAdjustmentBehavior = .always
         charactersCollectionView.collectionViewLayout = flowLayout
-        //charactersCollectionView.contentInset = UIEdgeInsets(top: Style.Size.topMargin, left: Style.Size.margin, bottom: 44, right: Style.Size.margin)
-        //charactersCollectionView.scrollIndicatorInsets = UIEdgeInsets(top: Style.Size.topMargin, left: 0, bottom: 0, right: 0)
+        
+//        charactersCollectionView.contentInset = UIEdgeInsets(top: Style.Size.topMargin, left: Style.Size.margin, bottom: 44, right: Style.Size.margin)
+//        charactersCollectionView.scrollIndicatorInsets = UIEdgeInsets(top: Style.Size.topMargin, left: 0, bottom: 0, right: 0)
         charactersCollectionView.backgroundColor = .clear
+        
+        //let customFlowLayout = CustomFlowLayout()
+        
         charactersCollectionView.register(UINib(nibName: "CharactersCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CharactersCell")
     }
     

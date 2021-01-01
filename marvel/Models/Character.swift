@@ -1,110 +1,70 @@
 //
-//  AppDelegate.swift
+//  Character.swift
 //  marvel
 //
-//  Created by Fernando Luiz Goulart on 30/12/20.
+//  Created by Fernando Luiz Goulart on 31/12/20.
 //  Copyright © 2020 Fernando Luiz Goulart. All rights reserved.
 //
 
-import UIKit
-import CoreData
+import Foundation
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+struct Characters: Codable {
+    let code: Int
+    let status: String
+    let data: CharactersData
+}
 
-    var window: UIWindow?
+struct CharactersData: Codable {
+    let offset: Int
+    let limit: Int
+    let total: Int
+    let count: Int
+    let results: [Character]
+}
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        return true
-    }
-
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Favorites")
-        container.loadPersistentStores(completionHandler: {(storeDescription, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
-    }()
+struct Character: Codable {
     
-    // MARK: - Core Data Saving support
-    
-    func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
+    // MARK: Character info
+    let id: Int
+    let name: String
+    let description: String
+    let thumbnail: Thumbnail
+    let comics: ShortComics
+    let series: ShortSeries
     
 }
 
-
-//Marvel Public Key 2f63d6c20dbbf54179db421f8af36bf4
-//Marvel Private Key 3f5e2a68fe6eee27bcd406603f983cbaf30a0df1
-//private+public 3f5e2a68fe6eee27bcd406603f983cbaf30a0df12f63d6c20dbbf54179db421f8af36bf4
-
-
-//Chamada https://gateway.marvel.com:443/v1/public/characters?hash=bc28cae76267fa2378b2d26280a8fe9c&ts=1609424333.442628&limit=3&offset=10&orderBy=name
-
-
-/*
- 
- func MD5(string: String) -> Data {
-     let messageData = string.data(using:.utf8)!
-     var digestData = Data(count: Int(CC_MD5_DIGEST_LENGTH))
-
-     _ = digestData.withUnsafeMutableBytes {digestBytes in
-         messageData.withUnsafeBytes {messageBytes in
-             CC_MD5(messageBytes, CC_LONG(messageData.count), digestBytes)
-         }
-     }
-
-     return digestData
- }
-
- print("Hello World")
- let timestamp = NSDate().timeIntervalSince1970
- print(timestamp)
- print(MD5("\(timestmp)3f5e2a68fe6eee27bcd406603f983cbaf30a0df12f63d6c20dbbf54179db421f8af36bf4)")
- */
+struct Thumbnail: Codable {
+    let imagePath: String
+    let imageExtension: String
+    
+    enum CodingKeys: String, CodingKey {
+           case imagePath = "path"
+           case imageExtension = "extension"
+       }
+}
 
 
+struct ShortComics: Codable {
+    let items: [ShortComic]
+}
 
-/*
- 
- Modelo do character:
- 
- data -> results -> id (characterId) ex: 1011334
- data -> results -> name ex: 3-D Man
- data -> results -> thumbnail.path + thumbnail.extension
- 
- */
-//GET CHARACTERS EXAMPLE
+struct ShortComic: Codable {
+    let resourceURI: String
+    let name: String
+}
 
+struct ShortSeries: Codable {
+    let items: [ShortSerie]
+}
 
-//pode incluir parametros ?limit=20&offset=0
+struct ShortSerie: Codable {
+    let resourceURI: String
+    let name: String
+}
+
 /*
  {
- "code": 200,
- "status": "Ok",
- "copyright": "© 2020 MARVEL",
- "attributionText": "Data provided by Marvel. © 2020 MARVEL",
- "attributionHTML": "<a href=\"http://marvel.com\">Data provided by Marvel. © 2020 MARVEL</a>",
- "etag": "449386bf7426b9d20aa5d6d817052eb4cb2e6746",
- "data": {
-     "offset": 0,
-     "limit": 20,
-     "total": 1493,  ---> Da pra saber quantas paginas tem com isto
-     "count": 20,
-     "results": [
-         {
              "id": 1011334,
              "name": "3-D Man",
              "description": "",

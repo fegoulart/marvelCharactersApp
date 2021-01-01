@@ -11,9 +11,10 @@ import SkeletonView
 
 class CharactersCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var characterImageView: UIImageView!
-    @IBOutlet weak var favoriteUIButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton!
+    
     @IBOutlet weak var characterNameLabel: UILabel!
+    @IBOutlet weak var characterImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

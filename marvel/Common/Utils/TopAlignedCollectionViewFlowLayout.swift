@@ -47,12 +47,12 @@ class TwoColumnsViewFlowLayout: UICollectionViewFlowLayout {
         guard let collectionView = collectionView else { return }
         
         let availableWidth = collectionView.bounds.width
-        let numColumns = CGFloat(2.5)
+        let numColumns = CGFloat(2.2)
         let cellWidth = (availableWidth / CGFloat(numColumns)).rounded(.down)
         let cellHeight = cellWidth
         
         self.itemSize = CGSize(width: cellWidth, height: cellHeight)
-        self.sectionInset = UIEdgeInsets(top: self.minimumInteritemSpacing, left: 0.0, bottom: 0.0, right: 0.0)
+        self.sectionInset = UIEdgeInsets(top: self.minimumInteritemSpacing, left: 8.0, bottom: 0.0, right: 8.0)
         self.sectionInsetReference = .fromSafeArea
         
     }

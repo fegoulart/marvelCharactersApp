@@ -30,6 +30,8 @@ final class CharactersViewController: UIViewController, CharactersDisplayLogic {
     
     lazy private var flowLayout: TwoColumnsViewFlowLayout = {
         let layout = TwoColumnsViewFlowLayout()
+        layout.minimumInteritemSpacing = 8
+        layout.minimumLineSpacing = 8
         //layout.minimumInteritemSpacing = Style.Size.margin
         //layout.minimumLineSpacing = Style.Size.margin
         return layout

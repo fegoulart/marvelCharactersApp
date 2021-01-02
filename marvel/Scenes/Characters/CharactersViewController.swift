@@ -220,7 +220,7 @@ private extension CharactersViewController {
         
 //        charactersCollectionView.contentInset = UIEdgeInsets(top: Style.Size.topMargin, left: Style.Size.margin, bottom: 44, right: Style.Size.margin)
 //        charactersCollectionView.scrollIndicatorInsets = UIEdgeInsets(top: Style.Size.topMargin, left: 0, bottom: 0, right: 0)
-        charactersCollectionView.backgroundColor = .clear
+        //charactersCollectionView.backgroundColor = .clear
         
         //let customFlowLayout = CustomFlowLayout()
         

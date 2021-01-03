@@ -11,6 +11,7 @@ import SkeletonView
 
 class CharactersCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var topMostUIView: UIView!
     @IBOutlet weak var favoriteButton: UIButton!
     
     @IBOutlet weak var characterNameLabel: UILabel!
@@ -20,23 +21,20 @@ class CharactersCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         isSkeletonable = true
         clipsToBounds = true
+        topMostUIView.layer.borderWidth = 1
+        topMostUIView.layer.borderColor = UIColor.black.cgColor
+        topMostUIView.layer.cornerRadius = 20
+        characterNameLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+        characterNameLabel.adjustsFontSizeToFitWidth = true
+        characterImageView.layer.cornerRadius = 12
+        
     }
+    
     
     func update(item: CharactersPage.DisplayedCharacter) {
         characterNameLabel.text =  item.characterName
         characterImageView.download(image: item.characterImageURL)
     }
-    
-    /*
-     func getSize(_ width: CGFloat) -> CGSize {
-         widthConstraint.constant = width
-         guard let title = lblTitle.text else {
-              return CGSize(width: width, height: width)
-         }
-         let titleWidth = width - 10
-         let totalHeight = width + title.height(constraintedWidth: titleWidth, font: lblTitle.font) + 10
-         return CGSize(width: width, height: totalHeight)
-     }
-     */
-    
+
+
 }

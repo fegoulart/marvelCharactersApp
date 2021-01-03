@@ -33,7 +33,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="O7N-8d-K6Q">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                                <rect key="frame" x="16" y="0.0" width="343" height="618"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Cu5-ur-f1y">
                                     <size key="itemSize" width="150" height="150"/>
@@ -46,11 +46,11 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="O7N-8d-K6Q" firstAttribute="leading" secondItem="0gx-RI-HOI" secondAttribute="leading" id="3Hn-gp-Gik"/>
+                            <constraint firstItem="O7N-8d-K6Q" firstAttribute="leading" secondItem="0gx-RI-HOI" secondAttribute="leading" constant="16" id="3Hn-gp-Gik"/>
                             <constraint firstItem="0gx-RI-HOI" firstAttribute="bottom" secondItem="O7N-8d-K6Q" secondAttribute="bottom" id="6cO-t1-Xtl"/>
                             <constraint firstItem="O7N-8d-K6Q" firstAttribute="centerY" secondItem="0gx-RI-HOI" secondAttribute="centerY" id="TIA-vR-QPW"/>
                             <constraint firstItem="O7N-8d-K6Q" firstAttribute="centerX" secondItem="0gx-RI-HOI" secondAttribute="centerX" id="dyY-h0-DkE"/>
-                            <constraint firstItem="0gx-RI-HOI" firstAttribute="trailing" secondItem="O7N-8d-K6Q" secondAttribute="trailing" id="lWN-8j-2UP"/>
+                            <constraint firstItem="0gx-RI-HOI" firstAttribute="trailing" secondItem="O7N-8d-K6Q" secondAttribute="trailing" constant="16" id="lWN-8j-2UP"/>
                             <constraint firstItem="O7N-8d-K6Q" firstAttribute="top" secondItem="0gx-RI-HOI" secondAttribute="top" id="tpX-F5-nZh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0gx-RI-HOI"/>

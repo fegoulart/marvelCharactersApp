@@ -11,6 +11,7 @@ import SkeletonView
 
 protocol CharactersDisplayLogic: class {
     func displayCharacters(viewModel: CharactersPage.FetchCharacters.ViewModel)
+    func displayNextCharacters(viewModel: CharactersPage.FetchNextCharacters.ViewModel)
     func displayRefreshedCharacters(viewModel: CharactersPage.RefreshCharacters.ViewModel)
 }
 
@@ -27,22 +28,15 @@ final class CharactersViewController: UIViewController, CharactersDisplayLogic {
     // MARK: Variables
     
     var displayedCharacters: [CharactersPage.DisplayedCharacter] = []
+    var paginationStatus: CharactersPage.PaginationStatus = CharactersPage.PaginationStatus(offset: 0, limit: 20, total: 0, count: 0)
     
     lazy private var flowLayout: TwoColumnsViewFlowLayout = {
         let layout = TwoColumnsViewFlowLayout()
         layout.minimumInteritemSpacing = 8
         layout.minimumLineSpacing = 8
-        //layout.minimumInteritemSpacing = Style.Size.margin
-        //layout.minimumLineSpacing = Style.Size.margin
         return layout
     }()
     
-//    lazy private var flowLayout: TopAlignedCollectionViewFlowLayout = {
-//        let layout = TopAlignedCollectionViewFlowLayout()
-//        //layout.minimumInteritemSpacing = Style.Size.margin
-//        //layout.minimumLineSpacing = Style.Size.margin
-//        return layout
-//    }()
     
     lazy var refresher: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -51,8 +45,6 @@ final class CharactersViewController: UIViewController, CharactersDisplayLogic {
         refreshControl.addTarget(self, action: #selector(refreshCharacters), for: .valueChanged)
         return refreshControl
     }()
-    
-    //private lazy var sizingCell: CharactersCollectionViewCell? = .fromNib()
     
     // MARK: Object lifecycle
     
@@ -115,6 +107,34 @@ extension CharactersViewController {
         //            return
         //        }
         displayedCharacters = viewModel.displayedCharacters
+        paginationStatus = viewModel.paginationStatus
+        charactersCollectionView.reloadData()
+    }
+}
+
+// MARK: Fetch Next Page Characters data
+
+extension CharactersViewController {
+    @objc func fetchNextCharacters(offset: Int, limit: Int) {
+        let request = CharactersPage.FetchNextCharacters.Request(offset: offset, limit: limit)
+        interactor?.fetchNextCharacters(request: request)
+    }
+    
+    func displayNextCharacters(viewModel: CharactersPage.FetchNextCharacters.ViewModel) {
+        //view.hideSkeleton()
+        
+        setUpNewCharactersDisplay(viewModel: viewModel)
+        
+    }
+    
+    private func setUpNewCharactersDisplay(viewModel: CharactersPage.FetchNextCharacters.ViewModel) {
+        //TODO: Error treatment
+        //        guard viewModel.error == nil else {
+        //            Alert.showUnableToRetrieveDataAlert(on: self)
+        //            return
+        //        }
+        displayedCharacters += viewModel.displayedCharacters
+        paginationStatus = viewModel.paginationStatus
         charactersCollectionView.reloadData()
     }
 }
@@ -138,10 +158,13 @@ extension CharactersViewController {
         //            return
         //        }
         displayedCharacters = viewModel.displayedCharacters
+        paginationStatus = viewModel.paginationStatus
         charactersCollectionView.reloadData()
     }
     
 }
+
+
 
 // MARK: - Collection view delegates
 
@@ -151,14 +174,31 @@ extension CharactersViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         guard let cell = charactersCollectionView.dequeueReusableCell(withReuseIdentifier: "CharactersCell", for: indexPath) as? CharactersCollectionViewCell, !displayedCharacters.isEmpty else {
             return UICollectionViewCell()
         }
+        
+        
+        if isBottomOfScreen(indexPath: indexPath){
+            if hasMoreToLoad() {
+                self.paginationStatus.offset += self.paginationStatus.limit
+                self.fetchNextCharacters(offset: self.paginationStatus.offset, limit: self.paginationStatus.limit)
+            }
+        }
+        
         let character = self.displayedCharacters[indexPath.row]
         cell.update(item: character)
         return cell
     }
     
+    private func isBottomOfScreen(indexPath: IndexPath) -> Bool {
+        return indexPath.row >= displayedCharacters.count - 1
+    }
+    
+    private func hasMoreToLoad() -> Bool {
+        return self.displayedCharacters.count < self.paginationStatus.total
+    }
     
 }
 
@@ -170,7 +210,7 @@ extension CharactersViewController: SkeletonCollectionViewDataSource {
     }
     
     func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) ->   Int {
-        return 20
+        return self.displayedCharacters.count
     }
     
     
@@ -196,16 +236,10 @@ private extension CharactersViewController {
     func setupUI() {
         view.isSkeletonable = true
         let nav = self.navigationController?.navigationBar
-        //nav?.barTintColor = Style.Color.MainGray
         nav?.isTranslucent = false
-        nav?.tintColor = .white
-        nav?.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         title = "Characters"
-        //self.navigationItem.searchController = searchController
-        self.navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = .white
         definesPresentationContext = true
-        //setupSegmentedControl()
         setupCollectionView()
         extendedLayoutIncludesOpaqueBars = true
     }
@@ -214,16 +248,7 @@ private extension CharactersViewController {
         charactersCollectionView.delegate = self
         charactersCollectionView.dataSource = self
         charactersCollectionView.isSkeletonable = true
-        //flowLayout.estimatedItemSize = UICollectionViewFlowLayoutAutomaticSize
-        //charactersCollectionView.contentInsetAdjustmentBehavior = .always
         charactersCollectionView.collectionViewLayout = flowLayout
-        
-//        charactersCollectionView.contentInset = UIEdgeInsets(top: Style.Size.topMargin, left: Style.Size.margin, bottom: 44, right: Style.Size.margin)
-//        charactersCollectionView.scrollIndicatorInsets = UIEdgeInsets(top: Style.Size.topMargin, left: 0, bottom: 0, right: 0)
-        //charactersCollectionView.backgroundColor = .clear
-        
-        //let customFlowLayout = CustomFlowLayout()
-        
         charactersCollectionView.register(UINib(nibName: "CharactersCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CharactersCell")
     }
     

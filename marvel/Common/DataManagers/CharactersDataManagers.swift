@@ -28,7 +28,6 @@ protocol CharactersDataManager: AnyObject {
 }
 
 extension CharactersDataManager {
-    //TODO: Save 20 as limit and 0 as offset as a config constant
     func getAllCharacters(limit: Int? = 20, offset: Int? = 0, test: Bool = false, debugMode: Bool = false) -> Promise<Characters> {
         return getAllCharacters(limit: limit, offset: offset, test: test, debugMode: debugMode)
     }
@@ -43,7 +42,7 @@ final class CharactersNetworkManager: CharactersDataManager {
 
     
     func getAllCharacters(limit: Int?, offset: Int?, test:Bool,  debugMode: Bool) -> Promise<Characters> {
-        return APIManager.callApi(CharacterAPI.getAllCharacters(limit: nil, offset: nil), dataReturnType: Characters.self, test: test, debugMode: debugMode)
+        return APIManager.callApi(CharacterAPI.getAllCharacters(limit: limit, offset: offset), dataReturnType: Characters.self, test: test, debugMode: debugMode)
     }
     
     func getCharacter(characterId: Int, test: Bool, debugMode: Bool) -> Promise<Character> {

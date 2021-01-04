@@ -19,6 +19,10 @@ class CharactersCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.setupUI()
+    }
+    
+    func setupUI() {
         isSkeletonable = true
         clipsToBounds = true
         topMostUIView.layer.borderWidth = 1
@@ -35,6 +39,6 @@ class CharactersCollectionViewCell: UICollectionViewCell {
         characterNameLabel.text =  item.characterName
         characterImageView.download(image: item.characterImageURL)
     }
-
-
+    
+    
 }

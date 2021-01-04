@@ -10,27 +10,42 @@ import UIKit
 
 protocol CharactersPresentationLogic {
     func presentCharacters(response: CharactersPage.FetchCharacters.Response)
+    func presentNextCharacters(response: CharactersPage.FetchNextCharacters.Response)
     func presentRefreshedCharacters(response: CharactersPage.RefreshCharacters.Response)
 }
 
 
 final class CharactersPresenter: CharactersPresentationLogic {
-
+ 
     weak var viewController: CharactersDisplayLogic?
     
     // MARK: Set characters to be displayed after view did load
 
     func presentCharacters(response: CharactersPage.FetchCharacters.Response) {
         let displayedCharacters = getDisplayedCharacters(response.characters?.data.results)
-        let viewModel = CharactersPage.FetchCharacters.ViewModel(displayedCharacters: displayedCharacters)
+        let paginationStatus = getPaginationStatus(response.characters?.data)
+        let viewModel = CharactersPage.FetchCharacters.ViewModel(displayedCharacters: displayedCharacters, paginationStatus: paginationStatus)
         viewController?.displayCharacters(viewModel: viewModel)
     }
     
+    // MARK: Set characters to be displayed after new characters fetched
+    
+    func presentNextCharacters(response: CharactersPage.FetchNextCharacters.Response) {
+         let newDisplayedCharacters = getDisplayedCharacters(response.characters?.data.results)
+        let paginationStatus = getPaginationStatus(response.characters?.data)
+        let viewModel = CharactersPage.FetchNextCharacters.ViewModel(displayedCharacters: newDisplayedCharacters, paginationStatus: paginationStatus)
+        viewController?.displayNextCharacters(viewModel: viewModel)
+     }
+    
+    // MARK: Set characters to be displayed after a refresh
+    
     func presentRefreshedCharacters(response: CharactersPage.RefreshCharacters.Response) {
         let displayedCharacters = getDisplayedCharacters(response.characters?.data.results)
-        let viewModel = CharactersPage.RefreshCharacters.ViewModel(displayedCharacters: displayedCharacters)
+        let paginationStatus = getPaginationStatus(response.characters?.data)
+        let viewModel = CharactersPage.RefreshCharacters.ViewModel(displayedCharacters: displayedCharacters, paginationStatus: paginationStatus)
         viewController?.displayRefreshedCharacters(viewModel: viewModel)
     }
+    
     
 }
 
@@ -51,6 +66,24 @@ extension CharactersPresenter {
             }
         }
          return displayedCharacters
+    }
+    
+    private func getPaginationStatus(_ characterData: CharactersData?) -> CharactersPage.PaginationStatus {
+        
+        //TODO: Pull this constant to a global scope
+        let DEFAULT_LIMIT = 20
+        
+        var paginationStatus: CharactersPage.PaginationStatus = CharactersPage.PaginationStatus(offset: 0, limit: DEFAULT_LIMIT, total: 0, count: 0)
+        
+        if let data = characterData {
+            paginationStatus.offset = data.offset
+            paginationStatus.limit = data.limit
+            paginationStatus.total = data.total
+            paginationStatus.count = data.count
+        }
+        
+        return paginationStatus
+        
     }
     
    

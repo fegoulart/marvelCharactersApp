@@ -17,20 +17,49 @@ enum CharactersPage {
         var isFavorite: Bool
     }
     
+    struct PaginationStatus {
+        var offset: Int
+        var limit: Int
+        var total: Int
+        var count: Int
+    }
+    
     // MARK: Fetch Characters to display during first page load
     enum FetchCharacters {
         struct Request {
-            //var offset: Int
-            //var limit: Int
-            
+            var isTest: Bool = false
+            var isDebugMode: Bool = false
         }
+        
         struct Response {
             var characters: Characters?
             var error: CharacterErrors?
         }
+        
         struct ViewModel {
-            
             var displayedCharacters: [DisplayedCharacter]
+            var paginationStatus: PaginationStatus
+            var error: CharacterErrors?
+        }
+    }
+    
+    // MARK: Fetch more characters and append to existing after end of screen is reached
+    
+    enum FetchNextCharacters {
+        struct Request {
+            var offset: Int
+            var limit: Int
+            var isTest: Bool = false
+        }
+        
+        struct Response {
+            var characters: Characters?
+            var error: CharacterErrors?
+        }
+        
+        struct ViewModel {
+            var displayedCharacters: [DisplayedCharacter]
+            var paginationStatus: PaginationStatus
             var error: CharacterErrors?
         }
     }
@@ -39,18 +68,21 @@ enum CharactersPage {
     
     enum RefreshCharacters {
         struct Request {
-            
+            var isTest: Bool = false
         }
+        
         struct Response {
             var characters: Characters?
             var error: CharacterErrors?
         }
+        
         struct ViewModel {
-            
             var displayedCharacters: [DisplayedCharacter]
+            var paginationStatus: PaginationStatus
             var error: CharacterErrors?
         }
     }
+
     
     
 }

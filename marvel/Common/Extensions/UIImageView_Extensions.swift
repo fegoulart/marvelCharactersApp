@@ -14,7 +14,7 @@ extension UIImageView {
             self.image = UIImage(named: "SquareImage")
             return
         }
-        let image = UIImage(named: "GrootIcon")
+        let image = UIImage(named: "SquareImage")
         self.kf.setImage(with: ImageResource(downloadURL: imageURL), placeholder: image)
     }
 }

@@ -7,71 +7,159 @@
 //
 
 @testable import marvel
+/*
+ {"code":200,"status":"Ok","copyright":,"attributionHTML":,"etag":"449386bf7426b9d20aa5d6d817052eb4cb2e6746","data":{"offset":0,"limit":20,"total":50,"count":20,"results":[
+ */
+
+extension Characters {
+    static let validCharacters: JSONValue = [
+        "code":200,
+        "status":"Ok",
+        "copyright":"© 2020 MARVEL","attributionText":"Data provided by Marvel. © 2020 MARVEL",
+        "attributionHTML":"<a href=\"http://marvel.com\">Data provided by Marvel. © 2020 MARVEL</a>",
+        "etag":"449386bf7426b9d20aa5d6d817052eb4cb2e6746",
+        "data": CharactersData.validCharactersData
+    ]
+}
+
+/*
+ struct CharactersData: Codable {
+     let offset: Int
+     let limit: Int
+     let total: Int
+     let count: Int
+     let results: [Character]
+ }
+ */
+extension CharactersData {
+    static let validCharactersData: JSONValue = [
+        "offset": 0,
+        "limit": 20,
+        "total": 2,
+        "count": 2,
+        "results": [Character.validCharacter1, Character.validCharacter2]
+    
+    ]
+}
+
 
 extension Character {
-    static let validCharacter : JSONValue = [
+    static let validCharacter1 : JSONValue = [
         "id": 1009368,
         "name": "Iron Man",
         "description": "Wounded, captured and forced to build a weapon by his enemies, billionaire industrialist Tony Stark instead created an advanced suit of armor to save his life and escape captivity. Now with a new outlook on life, Tony uses his money and intelligence to make the world a safer, better place as Iron Man.",
-        "thumbnail":  Thumbnail.validThumbnail,
-        "comics": ShortComics.validShortComics,
-        "series": ShortSeries.validShortSeries
+        "thumbnail":  Thumbnail.validThumbnail1,
+        "comics": ShortComics.validShortComics1,
+        "series": ShortSeries.validShortSeries1
+    ]
+    
+    static let validCharacter2 : JSONValue = [
+        "id": 1011334,
+        "name": "3-D Man",
+        "description": "",
+        "thumbnail": Thumbnail.validThumbnail2,
+        "comics": ShortComics.validShortComics2,
+        "series": ShortSeries.validShortSeries2
     ]
 }
 
 extension Thumbnail {
-    static let validThumbnail: JSONValue = [
-        "imagePath" : "http://i.annihil.us/u/prod/marvel/i/mg/9/c0/527bb7b37ff55",
-        "imageExtension": "jpg"
+    static let validThumbnail1: JSONValue = [
+        "path" : "http://i.annihil.us/u/prod/marvel/i/mg/9/c0/527bb7b37ff55",
+        "extension": "jpg"
+    ]
+    
+    static let validThumbnail2: JSONValue = [
+        "path": "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784",
+        "extension" : "jpg"
     ]
 }
 
 
 extension ShortComic {
-    static let validShortComic1: JSONValue = [
+    static let validShortComic11: JSONValue = [
         "resourceURI": "http://gateway.marvel.com/v1/public/comics/43495",
         "name": "A+X (2012) #2"
     ]
-    static let validShortComic2: JSONValue = [
+    static let validShortComic12: JSONValue = [
         "resourceURI": "http://gateway.marvel.com/v1/public/comics/43506",
         "name":"A+X (2012) #7"
     ]
-    static let validShortComic3: JSONValue = [
+    static let validShortComic13: JSONValue = [
         "resourceURI": "http://gateway.marvel.com/v1/public/comics/24348",
         "name": "Adam: Legend of the Blue Marvel (Trade Paperback)"
     ]
     
+    static let validShortComic21: JSONValue = [
+        "resourceURI": "http://gateway.marvel.com/v1/public/comics/21366",
+        "name": "Avengers: The Initiative (2007) #14"
+    ]
+    static let validShortComic22: JSONValue = [
+        "resourceURI": "http://gateway.marvel.com/v1/public/comics/21546",
+        "name": "Avengers: The Initiative (2007) #15"
+    ]
+    static let validShortComic23: JSONValue = [
+        "resourceURI": "http://gateway.marvel.com/v1/public/comics/21741",
+        "name": "Avengers: The Initiative (2007) #16"
+    ]
+    
+    
 }
 
 extension ShortComics {
-    static let validShortComics: JSONValue = [
-        "items" : [ ShortComic.validShortComic1, ShortComic.validShortComic2, ShortComic.validShortComic3]
+    static let validShortComics1: JSONValue = [
+        "items" : [ ShortComic.validShortComic11, ShortComic.validShortComic12, ShortComic.validShortComic13]
+    ]
+    
+    static let validShortComics2: JSONValue = [
+        "items": [ShortComic.validShortComic21,ShortComic.validShortComic22,ShortComic.validShortComic23 ]
     ]
 }
 
 extension ShortSerie {
-    static let validShortSerie1: JSONValue = [
+    static let validShortSerie11: JSONValue = [
         "resourceURI": "http://gateway.marvel.com/v1/public/series/16450",
         "name": "A+X (2012 - 2014)"
     ]
-    static let validShortSerie2: JSONValue = [
+    static let validShortSerie12: JSONValue = [
         "resourceURI": "http://gateway.marvel.com/v1/public/series/6079",
         "name": "Adam: Legend of the Blue Marvel (2008)"
     ]
-    static let validShortSerie3: JSONValue = [
+    static let validShortSerie13: JSONValue = [
         "resourceURI": "http://gateway.marvel.com/v1/public/series/7524",
         "name": "Adam: Legend of the Blue Marvel (2008)"
     ]
-    static let validShortSerie4: JSONValue = [
+    static let validShortSerie14: JSONValue = [
         "resourceURI": "http://gateway.marvel.com/v1/public/series/27392",
         "name": "Aero (2019 - Present)"
     ]
+    
+    static let validShortSerie21: JSONValue = [
+           "resourceURI": "http://gateway.marvel.com/v1/public/series/1945",
+           "name": "Avengers: The Initiative (2007 - 2010)"
+       ]
+    
+    
+    static let validShortSerie22: JSONValue = [
+           "resourceURI": "http://gateway.marvel.com/v1/public/series/2005",
+           "name": "Deadpool (1997 - 2002)"
+       ]
+    
+    
+    static let validShortSerie23: JSONValue = [
+           "resourceURI": "http://gateway.marvel.com/v1/public/series/2045",
+           "name": "Marvel Premiere (1972 - 1981)"
+       ]
 }
 
 extension ShortSeries {
-    static let validShortSeries: JSONValue = [
-        "items" : [ShortSerie.validShortSerie1, ShortSerie.validShortSerie2, ShortSerie.validShortSerie3, ShortSerie.validShortSerie4]
+    static let validShortSeries1: JSONValue = [
+        "items" : [ShortSerie.validShortSerie11, ShortSerie.validShortSerie12, ShortSerie.validShortSerie13, ShortSerie.validShortSerie14]
         
+    ]
+    
+    static let validShortSeries2: JSONValue = [
+        "items" : [ShortSerie.validShortSerie21, ShortSerie.validShortSerie22, ShortSerie.validShortSerie23 ]
     ]
 }
 

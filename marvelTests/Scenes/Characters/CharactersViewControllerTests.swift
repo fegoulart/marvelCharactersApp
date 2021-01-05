@@ -144,30 +144,22 @@ class CharactersViewControllerTests: QuickSpec {
                         return fail("Should be a CharactersCollectionViewCell")
                     }
 
-                    /*
-                     @IBOutlet weak var topMostUIView: UIView!
-                     @IBOutlet weak var favoriteButton: UIButton!
-
-                     @IBOutlet weak var characterNameLabel: UILabel!
-                     @IBOutlet weak var characterImageView: UIImageView!
-                     */
-
                     expect(launchCell.characterNameLabel.text) == "Iron Man"
                 }
             }
 
-//            context("When refresh is called on the view controller") {
-//                it("Should fetch space x Characters when type of lanch is changes in segmented control") {
-//                    let CharactersBusinessLogicSpy = CharactersBusinessLogicSpy()
-//                    sut.interactor = CharactersBusinessLogicSpy
-//
-//                    loadview()
-//
-//                    sut.refreshCharacters()
-//
-//                    expect(CharactersBusinessLogicSpy.refreshCharactersCalled).to(beTrue())
-//                }
-//            }
+            context("When refresh is called on the view controller") {
+                it("Should fetch Characters again") {
+                    let CharactersBusinessLogicSpy = CharactersBusinessLogicSpy()
+                    sut.interactor = CharactersBusinessLogicSpy
+
+                    loadview()
+
+                    sut.refreshCharacters()
+
+                    expect(CharactersBusinessLogicSpy.refreshCharactersCalled).to(beTrue())
+                }
+            }
             
         }
     }

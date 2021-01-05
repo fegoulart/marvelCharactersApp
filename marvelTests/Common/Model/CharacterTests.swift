@@ -18,7 +18,7 @@ class CharacterTests: QuickSpec {
             var validCharacter: JSONValue!
             
             beforeEach {
-                validCharacter = Character.validCharacter
+                validCharacter = Character.validCharacter1
             }
             
             it("should be a valid character") {

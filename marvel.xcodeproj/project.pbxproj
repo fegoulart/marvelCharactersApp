@@ -11,6 +11,7 @@
 		3A8195605E1F1F77E4DB3636 /* Pods_marvelTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 685424D2F223AF079AC713F3 /* Pods_marvelTests.framework */; };
 		6C08B46825A48FBB0021A6C0 /* CharactersInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C08B46725A48FBB0021A6C0 /* CharactersInteractorTests.swift */; };
 		6C08B46A25A49CA60021A6C0 /* CharactersPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C08B46925A49CA60021A6C0 /* CharactersPresenterTests.swift */; };
+		6C08B46D25A5EA380021A6C0 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C08B46C25A5EA380021A6C0 /* CoreDataManager.swift */; };
 		6C1C7C8D259FA169006E4100 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 6C1C7C8C259FA169006E4100 /* .gitignore */; };
 		6C1E716B259CB56F0040DF83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1E716A259CB56F0040DF83 /* AppDelegate.swift */; };
 		6C1E7172259CB56F0040DF83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C1E7170259CB56F0040DF83 /* Main.storyboard */; };
@@ -79,6 +80,7 @@
 		685424D2F223AF079AC713F3 /* Pods_marvelTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_marvelTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C08B46725A48FBB0021A6C0 /* CharactersInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersInteractorTests.swift; sourceTree = "<group>"; };
 		6C08B46925A49CA60021A6C0 /* CharactersPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersPresenterTests.swift; sourceTree = "<group>"; };
+		6C08B46C25A5EA380021A6C0 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		6C1C7C8C259FA169006E4100 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6C1E7167259CB56F0040DF83 /* marvel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = marvel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C1E716A259CB56F0040DF83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -160,6 +162,15 @@
 				0DB7C6B54E68E648B5443583 /* libPods-marvelUITests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6C08B46B25A5EA110021A6C0 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				6C1E71A1259E1C320040DF83 /* Favorites.xcdatamodeld */,
+				6C08B46C25A5EA380021A6C0 /* CoreDataManager.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		6C1E715E259CB56F0040DF83 = {
@@ -261,7 +272,6 @@
 		6C1E71A0259E1B170040DF83 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6C1E71A1259E1C320040DF83 /* Favorites.xcdatamodeld */,
 				6C1E71A4259E25090040DF83 /* Character.swift */,
 			);
 			path = Models;
@@ -356,6 +366,7 @@
 		6CF9E739259E37F000CBAEC7 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				6C08B46B25A5EA110021A6C0 /* CoreData */,
 				6CF9E763259F75A300CBAEC7 /* Errors */,
 				6CF9E75C259F59A700CBAEC7 /* Utils */,
 				6CF9E750259E753100CBAEC7 /* DataManagers */,
@@ -707,6 +718,7 @@
 				6C1E71A5259E25090040DF83 /* Character.swift in Sources */,
 				6CF9E760259F6E8800CBAEC7 /* CharactersPresenter.swift in Sources */,
 				6CF9E75E259F59C400CBAEC7 /* TwoColumnsViewFlowLayout.swift in Sources */,
+				6C08B46D25A5EA380021A6C0 /* CoreDataManager.swift in Sources */,
 				6C1E716B259CB56F0040DF83 /* AppDelegate.swift in Sources */,
 				6CF9E738259E369500CBAEC7 /* CharactersInteractor.swift in Sources */,
 				6CF9E73C259E381500CBAEC7 /* ApiConfig.swift in Sources */,

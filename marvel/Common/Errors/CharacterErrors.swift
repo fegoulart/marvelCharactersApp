@@ -8,4 +8,7 @@
 
 enum CharacterErrors: Error {
     case couldNotLoadCharacters(error: String)
+    case couldNotFindAppDelegate(error: String)
 }
+
+

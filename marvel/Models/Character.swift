@@ -8,6 +8,13 @@
 
 import Foundation
 
+typealias CharacterId = Int
+
+enum FavoriteSuccess: Int {
+    case success = 0
+    case failure = 1
+}
+
 struct Characters: Codable {
     let code: Int
     let status: String
@@ -25,7 +32,7 @@ struct CharactersData: Codable {
 struct Character: Codable {
     
     // MARK: Character info
-    let id: Int
+    let id: CharacterId
     let name: String
     let description: String
     let thumbnail: Thumbnail
@@ -62,6 +69,7 @@ struct ShortSerie: Codable {
     let resourceURI: String
     let name: String
 }
+
 
 /*
  {

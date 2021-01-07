@@ -17,9 +17,9 @@ class CharactersCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var characterNameLabel: UILabel!
     @IBOutlet weak var characterImageView: UIImageView!
     
-    var interactor: CharactersBusinessLogic?
     weak var cellDelegate: CharacterCellDelegate?
     var characterId: CharacterId?
+    var isFavorite: Bool = false
     
     
     override func awakeFromNib() {
@@ -44,6 +44,13 @@ class CharactersCollectionViewCell: UICollectionViewCell {
         self.characterId = item.characterId
         characterNameLabel.text =  item.characterName
         characterImageView.download(image: item.characterImageURL)
+        if (item.isFavorite) {
+            favoriteButton.isSelected = true
+            self.isFavorite = true
+        } else {
+            favoriteButton.isSelected = false
+            self.isFavorite = false
+        }
     }
     
     

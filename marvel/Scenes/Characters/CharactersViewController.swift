@@ -37,6 +37,7 @@ final class CharactersViewController: UIViewController, CharactersDisplayLogic, 
     // MARK: Variables
     
     var displayedCharacters: [CharactersPage.DisplayedCharacter] = []
+    var favorites: [CharacterId] = []
     var paginationStatus: CharactersPage.PaginationStatus = CharactersPage.PaginationStatus(offset: 0, limit: 20, total: 0, count: 0)
     
     lazy private var flowLayout: TwoColumnsViewFlowLayout = {
@@ -100,8 +101,16 @@ extension CharactersViewController {
     
     func favoriteButtonTapped(cell: CharactersCollectionViewCell) {
         guard let id = cell.characterId else { return }
-        let request = CharactersPage.InsertFavorite.Request(characterId: id, displayedCharacters: self.displayedCharacters)
-        interactor?.insertFavorite(request: request)
+        
+        if cell.isFavorite {
+            let request = CharactersPage.DeleteFavorite.Request(characterId: id, displayedCharacters: self.displayedCharacters, currentFavorites: favorites)
+            interactor?.deleteFavorite(request: request)
+            
+        } else {
+            let request = CharactersPage.InsertFavorite.Request(characterId: id, displayedCharacters: self.displayedCharacters, currentFavorites: favorites)
+            interactor?.insertFavorite(request: request)
+        }
+        
     }
 }
 
@@ -129,6 +138,7 @@ extension CharactersViewController {
         //            return
         //        }
         displayedCharacters = viewModel.displayedCharacters
+        favorites = viewModel.favorites
         paginationStatus = viewModel.paginationStatus
         charactersCollectionView.reloadData()
     }
@@ -137,8 +147,8 @@ extension CharactersViewController {
 // MARK: Fetch Next Page Characters data
 
 extension CharactersViewController {
-    @objc func fetchNextCharacters(offset: Int, limit: Int) {
-        let request = CharactersPage.FetchNextCharacters.Request(offset: offset, limit: limit)
+    @objc func fetchNextCharacters(offset: Int, limit: Int, favorites: [CharacterId]) {
+        let request = CharactersPage.FetchNextCharacters.Request(offset: offset, limit: limit,currentFavorites: favorites)
         interactor?.fetchNextCharacters(request: request)
     }
     
@@ -181,6 +191,7 @@ extension CharactersViewController {
         //        }
         displayedCharacters = viewModel.displayedCharacters
         paginationStatus = viewModel.paginationStatus
+        favorites = viewModel.favorites
         charactersCollectionView.reloadData()
     }
     
@@ -192,6 +203,7 @@ extension CharactersViewController {
     
     func displayFavoritesUpdatedCharacter(viewModel: CharactersPage.InsertFavorite.ViewModel) {
         displayedCharacters = viewModel.displayedCharacters
+        favorites = viewModel.favorites
         charactersCollectionView.reloadData()
     }
 }
@@ -215,7 +227,7 @@ extension CharactersViewController: UICollectionViewDelegate, UICollectionViewDa
         if isBottomOfScreen(indexPath: indexPath){
             if hasMoreToLoad() {
                 self.paginationStatus.offset += self.paginationStatus.limit
-                self.fetchNextCharacters(offset: self.paginationStatus.offset, limit: self.paginationStatus.limit)
+                self.fetchNextCharacters(offset: self.paginationStatus.offset, limit: self.paginationStatus.limit,favorites: self.favorites)
             }
         }
         

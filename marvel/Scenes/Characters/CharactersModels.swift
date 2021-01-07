@@ -41,6 +41,7 @@ enum CharactersPage {
         struct ViewModel {
             var displayedCharacters: [DisplayedCharacter]
             var paginationStatus: PaginationStatus
+            var favorites: [CharacterId]
             var error: CharacterErrors?
         }
     }
@@ -52,6 +53,7 @@ enum CharactersPage {
             var offset: Int
             var limit: Int
             var isTest: Bool = false
+            var currentFavorites: [CharacterId]
         }
         
         struct Response {
@@ -83,10 +85,11 @@ enum CharactersPage {
         struct ViewModel {
             var displayedCharacters: [DisplayedCharacter]
             var paginationStatus: PaginationStatus
+            var favorites: [CharacterId]
             var error: CharacterErrors?
         }
     }
-
+    
     // MARK: Fetch favorites from Core Data to update cells
     
     enum FetchLocalFavorites {
@@ -124,6 +127,32 @@ enum CharactersPage {
         
         struct ViewModel {
             var displayedCharacters: [DisplayedCharacter]
+            var favorites: [CharacterId]
+            var error: CharacterErrors?
+        }
+        
+    }
+    
+    // MARK: Remove character as favorite
+    
+    enum DeleteFavorite {
+        struct Request {
+            var characterId: CharacterId
+            var displayedCharacters: [DisplayedCharacter]?
+            var currentFavorites: [CharacterId]?
+        }
+        
+        struct Response {
+            var isSuccess: FavoriteSuccess?
+            var error: CharacterErrors?
+            var displayedCharacters: [DisplayedCharacter]?
+            var favorites: [CharacterId]?
+            
+        }
+        
+        struct ViewModel {
+            var displayedCharacters: [DisplayedCharacter]
+            var favorites: [CharacterId]
             var error: CharacterErrors?
         }
         

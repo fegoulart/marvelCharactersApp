@@ -13,6 +13,7 @@ protocol CharactersPresentationLogic {
     func presentNextCharacters(response: CharactersPage.FetchNextCharacters.Response)
     func presentRefreshedCharacters(response: CharactersPage.RefreshCharacters.Response)
     func presentNewFavoriteCharacter(response: CharactersPage.InsertFavorite.Response)
+    func presentRemovedFavoriteCharacter(response: CharactersPage.DeleteFavorite.Response)
 }
 
 
@@ -25,7 +26,7 @@ final class CharactersPresenter: CharactersPresentationLogic {
     func presentCharacters(response: CharactersPage.FetchCharacters.Response) {
         let displayedCharacters = getDisplayedCharacters(response.characters?.data.results, favoriteIds: response.favorites)
         let paginationStatus = getPaginationStatus(response.characters?.data)
-        let viewModel = CharactersPage.FetchCharacters.ViewModel(displayedCharacters: displayedCharacters, paginationStatus: paginationStatus)
+        let viewModel = CharactersPage.FetchCharacters.ViewModel(displayedCharacters: displayedCharacters, paginationStatus: paginationStatus, favorites: response.favorites ?? [])
         viewController?.displayCharacters(viewModel: viewModel)
     }
     
@@ -43,7 +44,7 @@ final class CharactersPresenter: CharactersPresentationLogic {
     func presentRefreshedCharacters(response: CharactersPage.RefreshCharacters.Response) {
         let displayedCharacters = getDisplayedCharacters(response.characters?.data.results, favoriteIds: response.favorites)
         let paginationStatus = getPaginationStatus(response.characters?.data)
-        let viewModel = CharactersPage.RefreshCharacters.ViewModel(displayedCharacters: displayedCharacters, paginationStatus: paginationStatus)
+        let viewModel = CharactersPage.RefreshCharacters.ViewModel(displayedCharacters: displayedCharacters, paginationStatus: paginationStatus, favorites: response.favorites ?? [])
         viewController?.displayRefreshedCharacters(viewModel: viewModel)
     }
     
@@ -56,9 +57,22 @@ final class CharactersPresenter: CharactersPresentationLogic {
             currentCharacters = responseCharacters
         }
         let displayedCharacters = updateDisplayedCharacters(currentDisplayedCharacters: currentCharacters, favoriteIds: newFavorites)
-        let viewModel = CharactersPage.InsertFavorite.ViewModel(displayedCharacters: displayedCharacters)
+        let viewModel = CharactersPage.InsertFavorite.ViewModel(displayedCharacters: displayedCharacters, favorites: newFavorites)
         viewController?.displayFavoritesUpdatedCharacter(viewModel: viewModel)
      }
+    
+    func presentRemovedFavoriteCharacter(response: CharactersPage.DeleteFavorite.Response) {
+       
+       if response.isSuccess == FavoriteSuccess.failure { return }
+       guard let newFavorites = response.favorites else { return }
+       var currentCharacters : [CharactersPage.DisplayedCharacter] = []
+       if let responseCharacters = response.displayedCharacters {
+           currentCharacters = responseCharacters
+       }
+       let displayedCharacters = updateDisplayedCharacters(currentDisplayedCharacters: currentCharacters, favoriteIds: newFavorites)
+       let viewModel = CharactersPage.InsertFavorite.ViewModel(displayedCharacters: displayedCharacters, favorites: newFavorites)
+       viewController?.displayFavoritesUpdatedCharacter(viewModel: viewModel)
+    }
     
     
 }

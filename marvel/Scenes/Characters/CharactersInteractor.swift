@@ -14,6 +14,7 @@ protocol CharactersBusinessLogic {
     func fetchNextCharacters(request: CharactersPage.FetchNextCharacters.Request)
     func refreshCharacters(request: CharactersPage.RefreshCharacters.Request)
     func insertFavorite(request: CharactersPage.InsertFavorite.Request)
+    func deleteFavorite(request: CharactersPage.DeleteFavorite.Request)
 }
 
 protocol CharactersDataStore {
@@ -74,7 +75,7 @@ class CharactersInteractor: CharactersBusinessLogic, CharactersDataStore {
         worker.charactersDataManager.getAllCharacters(limit: request.limit, offset: request.offset,test: request.isTest).done {
             characters in
             self.characters = characters
-            response = CharactersPage.FetchNextCharacters.Response(characters: self.characters, error: nil)
+            response = CharactersPage.FetchNextCharacters.Response(characters: self.characters, favorites: request.currentFavorites,error: nil)
         }.catch { error in
             response = CharactersPage.FetchNextCharacters.Response(characters: self.characters, error: nil)
         }.finally {
@@ -116,6 +117,31 @@ class CharactersInteractor: CharactersBusinessLogic, CharactersDataStore {
             response = CharactersPage.InsertFavorite.Response(isSuccess: FavoriteSuccess.failure, error: error as? CharacterErrors, displayedCharacters: request.displayedCharacters, favorites: request.currentFavorites)
         }.finally {
             self.presenter?.presentNewFavoriteCharacter(response: response)
+        }
+        
+    }
+    
+    func deleteFavorite(request: CharactersPage.DeleteFavorite.Request) {
+        
+        var response: CharactersPage.DeleteFavorite.Response!
+        favoritesCoreDataWorker.favoriteCoreDataManager.unfavoriteIt(characterId: request.characterId).done {
+            result in
+            
+//            var favorites : [CharacterId] = []
+//            if let currentFavorites = request.currentFavorites {
+//                for favorite in currentFavorites {
+//                    favorites.append(favorite)
+//                }
+//            }
+            
+            let favorites = request.currentFavorites?.filter({ item -> Bool in
+                item != request.characterId
+            })
+            response = CharactersPage.DeleteFavorite.Response(isSuccess: FavoriteSuccess.success, error: nil, displayedCharacters: request.displayedCharacters, favorites: favorites)
+        }.catch { error in
+            response = CharactersPage.DeleteFavorite.Response(isSuccess: FavoriteSuccess.failure, error: error as? CharacterErrors, displayedCharacters: request.displayedCharacters, favorites: request.currentFavorites)
+        }.finally {
+            self.presenter?.presentRemovedFavoriteCharacter(response: response)
         }
         
     }

@@ -29,7 +29,8 @@
                             <constraint firstAttribute="width" secondItem="ECC-iD-Gvb" secondAttribute="height" multiplier="1:1" id="Gov-uJ-Xes"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="dFM-4o-X9D"/>
                         </constraints>
-                        <state key="normal" backgroundImage="FavoritesIcon"/>
+                        <state key="normal" backgroundImage="star"/>
+                        <state key="selected" backgroundImage="starFavorite"/>
                         <connections>
                             <action selector="FavoriteUIButtonAction:" destination="ugi-Ta-wPY" eventType="touchUpInside" id="Pj4-I6-Chg"/>
                         </connections>
@@ -64,7 +65,8 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="FavoritesIcon" width="25" height="25"/>
         <image name="GrootIcon" width="19" height="25"/>
+        <image name="star" width="44" height="42"/>
+        <image name="starFavorite" width="44" height="42"/>
     </resources>
 </document>

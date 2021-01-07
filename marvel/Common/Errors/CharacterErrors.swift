@@ -9,6 +9,7 @@
 enum CharacterErrors: Error {
     case couldNotLoadCharacters(error: String)
     case couldNotFindAppDelegate(error: String)
+    case couldNotLoadFavorites(error: String)
 }
 
 

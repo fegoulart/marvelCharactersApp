@@ -12,6 +12,7 @@ import UIKit
 enum CharactersPage {
     
     struct DisplayedCharacter {
+        var characterId: CharacterId
         var characterName: String
         var characterImageURL: String
         var isFavorite: Bool
@@ -33,6 +34,7 @@ enum CharactersPage {
         
         struct Response {
             var characters: Characters?
+            var favorites: [CharacterId]?
             var error: CharacterErrors?
         }
         
@@ -54,6 +56,7 @@ enum CharactersPage {
         
         struct Response {
             var characters: Characters?
+            var favorites: [CharacterId]?
             var error: CharacterErrors?
         }
         
@@ -73,6 +76,7 @@ enum CharactersPage {
         
         struct Response {
             var characters: Characters?
+            var favorites: [CharacterId]?
             var error: CharacterErrors?
         }
         
@@ -83,6 +87,47 @@ enum CharactersPage {
         }
     }
 
+    // MARK: Fetch favorites from Core Data to update cells
+    
+    enum FetchLocalFavorites {
+        struct Request {
+            
+        }
+        
+        struct Response {
+            var characterIds: [CharacterId]?
+            var error: CharacterErrors?
+        }
+        
+        struct ViewModel {
+            
+        }
+        
+    }
+    
+    // MARK: Set character as favorite
+    
+    enum InsertFavorite {
+        struct Request {
+            var characterId: CharacterId
+            var displayedCharacters: [DisplayedCharacter]?
+            var currentFavorites: [CharacterId]?
+        }
+        
+        struct Response {
+            var isSuccess: FavoriteSuccess?
+            var error: CharacterErrors?
+            var displayedCharacters: [DisplayedCharacter]?
+            var favorites: [CharacterId]?
+            
+        }
+        
+        struct ViewModel {
+            var displayedCharacters: [DisplayedCharacter]
+            var error: CharacterErrors?
+        }
+        
+    }
     
     
 }

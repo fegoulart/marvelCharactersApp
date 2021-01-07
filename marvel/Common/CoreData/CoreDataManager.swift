@@ -16,17 +16,18 @@ enum OperationType {
 
 protocol CharactersReturnDataDecoder {
     
-    static func charactersReturnDataDecode<T: Comparable>(_ type: T.Type, from data: Int)  -> T
+    static func setSuccessReturnType<T>(_ type: T.Type)  -> T
     static func charactersReturnDataDecode<T: Comparable>(_ type: T.Type, from data: [NSManagedObject])  -> T
 }
 
 struct DataToReturn:CharactersReturnDataDecoder {
     
-    static func charactersReturnDataDecode<T>(_ type: T.Type, from data: Int) -> T where T : Comparable {
-        return data as! T
+    static func setSuccessReturnType<T>(_ type: T.Type) -> T  {
+        let success = FavoriteSuccess.success
+        return success as! T
     }
     
-    static func charactersReturnDataDecode<T>(_ type: T.Type, from data: [NSManagedObject]) -> T where T : Comparable {
+    static func charactersReturnDataDecode<T>(_ type: T.Type, from data: [NSManagedObject]) -> T  {
         return data as! T
     }
     
@@ -34,14 +35,15 @@ struct DataToReturn:CharactersReturnDataDecoder {
 
 
 protocol GenericCoreDataAPI {
-    static func callCoreData<T: Comparable, U: Comparable>(operationType: OperationType, entityName: String,dataReturnType: T.Type, keyValues: Dictionary<String,U>?) -> Promise<T>
+    static func callCoreData<T, U>(operationType: OperationType, entityName: String,dataReturnType: T.Type, keyValues: Dictionary<String,U>?) -> Promise<T>
     
+
 }
 
 struct CoreDataAPIManager:GenericCoreDataAPI {
     
     
-    static func callCoreData<T, U>(operationType: OperationType, entityName: String, dataReturnType: T.Type, keyValues: Dictionary<String, U>?) -> Promise<T> where T : Comparable, U : Comparable {
+    static func callCoreData<T, U>(operationType: OperationType, entityName: String, dataReturnType: T.Type, keyValues: Dictionary<String, U>? = [:]) -> Promise<T>  {
         
         return Promise { seal in
             
@@ -63,7 +65,7 @@ struct CoreDataAPIManager:GenericCoreDataAPI {
                 }
                 do {
                     try managedContext.save()
-                    let success = DataToReturn.charactersReturnDataDecode(dataReturnType, from: FavoriteSuccess.success.rawValue)
+                    let success = DataToReturn.setSuccessReturnType(dataReturnType)
                     try managedContext.save()
                     seal.fulfill(success)
                 } catch let error as NSError {
@@ -96,7 +98,7 @@ struct CoreDataAPIManager:GenericCoreDataAPI {
                     } catch let error as NSError {
                         seal.reject(error)
                     }
-                    let success = DataToReturn.charactersReturnDataDecode(dataReturnType, from: FavoriteSuccess.success.rawValue)
+                    let success = DataToReturn.setSuccessReturnType(dataReturnType)
                     seal.fulfill(success)
                     
                 }

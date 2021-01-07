@@ -17,6 +17,11 @@ class CharactersCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var characterNameLabel: UILabel!
     @IBOutlet weak var characterImageView: UIImageView!
     
+    var interactor: CharactersBusinessLogic?
+    weak var cellDelegate: CharacterCellDelegate?
+    var characterId: CharacterId?
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.setupUI()
@@ -36,8 +41,14 @@ class CharactersCollectionViewCell: UICollectionViewCell {
     
     
     func update(item: CharactersPage.DisplayedCharacter) {
+        self.characterId = item.characterId
         characterNameLabel.text =  item.characterName
         characterImageView.download(image: item.characterImageURL)
+    }
+    
+    
+    @IBAction func FavoriteUIButtonAction(_ sender: UIButton) {
+        self.cellDelegate?.favoriteButtonTapped(cell: self)
     }
     
     

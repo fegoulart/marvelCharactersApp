@@ -8,16 +8,25 @@
 
 import UIKit
 import SkeletonView
+import PromiseKit
 
-protocol CharactersDisplayLogic: class {
+protocol CharactersDisplayLogic: AnyObject {
     func displayCharacters(viewModel: CharactersPage.FetchCharacters.ViewModel)
     func displayNextCharacters(viewModel: CharactersPage.FetchNextCharacters.ViewModel)
     func displayRefreshedCharacters(viewModel: CharactersPage.RefreshCharacters.ViewModel)
+    func displayFavoritesUpdatedCharacter(viewModel: CharactersPage.InsertFavorite.ViewModel)
+}
+
+protocol CharacterCellDelegate: AnyObject {
+    func favoriteButtonTapped(cell: CharactersCollectionViewCell)
 }
 
 
-final class CharactersViewController: UIViewController, CharactersDisplayLogic {
+final class CharactersViewController: UIViewController, CharactersDisplayLogic, CharacterCellDelegate {
+
     
+    
+
     var interactor: CharactersBusinessLogic?
     //var router: (NSObjectProtocol & CharactersRoutingLogic & CharactersDataPassing)?
     
@@ -63,7 +72,9 @@ final class CharactersViewController: UIViewController, CharactersDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        //fetchLocalFavorites()
         fetchCharacters()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -81,6 +92,17 @@ final class CharactersViewController: UIViewController, CharactersDisplayLogic {
         charactersCollectionView.collectionViewLayout.invalidateLayout()
     }
     
+}
+
+// MARK: Character Cell Delegate
+
+extension CharactersViewController {
+    
+    func favoriteButtonTapped(cell: CharactersCollectionViewCell) {
+        guard let id = cell.characterId else { return }
+        let request = CharactersPage.InsertFavorite.Request(characterId: id, displayedCharacters: self.displayedCharacters)
+        interactor?.insertFavorite(request: request)
+    }
 }
 
 // MARK: Fetch characters on screen load
@@ -164,6 +186,16 @@ extension CharactersViewController {
     
 }
 
+// MARK: Update favorite data
+
+extension CharactersViewController {
+    
+    func displayFavoritesUpdatedCharacter(viewModel: CharactersPage.InsertFavorite.ViewModel) {
+        displayedCharacters = viewModel.displayedCharacters
+        charactersCollectionView.reloadData()
+    }
+}
+
 
 
 // MARK: - Collection view delegates
@@ -188,6 +220,7 @@ extension CharactersViewController: UICollectionViewDelegate, UICollectionViewDa
         }
         
         let character = self.displayedCharacters[indexPath.row]
+        cell.cellDelegate = self
         cell.update(item: character)
         return cell
     }

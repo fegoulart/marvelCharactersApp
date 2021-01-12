@@ -102,7 +102,8 @@ class CharactersInteractor: CharactersBusinessLogic, CharactersDataStore {
     func insertFavorite(request: CharactersPage.InsertFavorite.Request) {
         
         var response: CharactersPage.InsertFavorite.Response!
-        favoritesCoreDataWorker.favoriteCoreDataManager.favoriteIt(characterId: request.characterId).done {
+        
+        favoritesCoreDataWorker.favoriteCoreDataManager.favoriteIt(characterId: request.characterId, characterName: request.characaterName, characterImage: request.characterImage).done {
             result in
             
             var favorites : [CharacterId] = []

@@ -9,9 +9,9 @@
 @testable import marvel
 
 extension CharactersPage.DisplayedCharacter {
-    static func makeStub(_ characterName: String = "Iron Man", _ characterImageURL: String = "http://i.annihil.us/u/prod/marvel/i/mg/9/c0/527bb7b37ff55.jpg",_ isFavorite: Bool = false) -> CharactersPage.DisplayedCharacter {
+    static func makeStub(_ characterId: Int = 101010, characterName: String = "Iron Man", _ characterImageURL: String = "http://i.annihil.us/u/prod/marvel/i/mg/9/c0/527bb7b37ff55.jpg",_ isFavorite: Bool = false) -> CharactersPage.DisplayedCharacter {
         
-        return CharactersPage.DisplayedCharacter(characterName: characterName, characterImageURL: characterImageURL, isFavorite: isFavorite)
+        return CharactersPage.DisplayedCharacter(characterId: characterId, characterName: characterName, characterImageURL: characterImageURL, isFavorite: isFavorite)
         
     }
 }

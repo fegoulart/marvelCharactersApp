@@ -111,7 +111,7 @@ class CharactersViewControllerTests: QuickSpec {
 
                     let paginationStatus = CharactersPage.PaginationStatus.makeStub(0,  20, 2, 2)
 
-                    let viewModel = CharactersPage.FetchCharacters.ViewModel(displayedCharacters:displayedCharacters, paginationStatus: paginationStatus , error: nil)
+                    let viewModel = CharactersPage.FetchCharacters.ViewModel(displayedCharacters:displayedCharacters, paginationStatus: paginationStatus, favorites: <#[CharacterId]#> , error: nil)
 
                     sut.displayCharacters(viewModel: viewModel)
 

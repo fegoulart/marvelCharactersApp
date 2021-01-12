@@ -113,6 +113,8 @@ enum CharactersPage {
     enum InsertFavorite {
         struct Request {
             var characterId: CharacterId
+            var characaterName: String
+            var characterImage: UIImage
             var displayedCharacters: [DisplayedCharacter]?
             var currentFavorites: [CharacterId]?
         }

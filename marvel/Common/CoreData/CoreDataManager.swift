@@ -35,7 +35,7 @@ struct DataToReturn:CharactersReturnDataDecoder {
 
 
 protocol GenericCoreDataAPI {
-    static func callCoreData<T, U>(operationType: OperationType, entityName: String,dataReturnType: T.Type, keyValues: Dictionary<String,U>?) -> Promise<T>
+    static func callCoreData<T, U>(operationType: OperationType, entityName: String,dataReturnType: T.Type, keyValues: Dictionary<String,U>?, sortDescriptors: [NSSortDescriptor]?) -> Promise<T>
     
 
 }
@@ -43,7 +43,7 @@ protocol GenericCoreDataAPI {
 struct CoreDataAPIManager:GenericCoreDataAPI {
     
     
-    static func callCoreData<T, U>(operationType: OperationType, entityName: String, dataReturnType: T.Type, keyValues: Dictionary<String, U>? = [:]) -> Promise<T>  {
+    static func callCoreData<T, U>(operationType: OperationType, entityName: String, dataReturnType: T.Type, keyValues: Dictionary<String, U>? = [:], sortDescriptors: [NSSortDescriptor]? = nil) -> Promise<T>  {
         
         return Promise { seal in
             
@@ -66,13 +66,15 @@ struct CoreDataAPIManager:GenericCoreDataAPI {
                 do {
                     try managedContext.save()
                     let success = DataToReturn.setSuccessReturnType(dataReturnType)
-                    try managedContext.save()
                     seal.fulfill(success)
                 } catch let error as NSError {
                     seal.reject(error)
                 }
             case OperationType.fetchAll:
                 let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+                if let sort = sortDescriptors {
+                    fetchRequest.sortDescriptors = sort
+                }
                 do {
                     let fetchedData = try managedContext.fetch(fetchRequest)
                     let dataToReturn = DataToReturn.charactersReturnDataDecode(dataReturnType, from: fetchedData)

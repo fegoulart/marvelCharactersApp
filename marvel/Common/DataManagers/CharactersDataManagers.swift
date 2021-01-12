@@ -71,7 +71,7 @@ extension FavoritesCoreDataInjected {
 protocol FavoritesDataManager: AnyObject {
 
     func getAllFavorites() -> Promise<[marvel.Favorite]>
-    func favoriteIt(characterId: CharacterId) -> Promise<FavoriteSuccess>
+    func favoriteIt(characterId: CharacterId, characterName: String, characterImage: UIImage) -> Promise<FavoriteSuccess>
     func unfavoriteIt(characterId: CharacterId) -> Promise<FavoriteSuccess>
     
 }
@@ -79,14 +79,16 @@ protocol FavoritesDataManager: AnyObject {
 final class FavoritesCoreDataManager: FavoritesDataManager {
     
     func getAllFavorites() -> Promise<[marvel.Favorite]> {
-        return CoreDataAPIManager.callCoreData(operationType: .fetchAll, entityName: "Favorite", dataReturnType: [marvel.Favorite].self, keyValues: [:])
+        return CoreDataAPIManager.callCoreData(operationType: .fetchAll, entityName: "Favorite", dataReturnType: [marvel.Favorite].self, keyValues: [:], sortDescriptors: [NSSortDescriptor(key: "characterName", ascending: true)])
     }
     
-    func favoriteIt(characterId: CharacterId) -> Promise<FavoriteSuccess> {
+    func favoriteIt(characterId: CharacterId, characterName: String, characterImage: UIImage) -> Promise<FavoriteSuccess> {
         
         let insertDictionary = [
-        "characterId":characterId,
-        "isFavorite": true
+            "characterId": characterId,
+        "isFavorite": true,
+        "characterImage": characterImage.jpegData(withCompressionQuality: 1.0)!,
+        "characterName" : characterName
             ] as [String : Any]
         return CoreDataAPIManager.callCoreData(operationType: .insert, entityName: "Favorite", dataReturnType: FavoriteSuccess.self, keyValues: insertDictionary)
     }

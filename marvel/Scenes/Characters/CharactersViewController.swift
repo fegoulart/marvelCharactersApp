@@ -107,7 +107,7 @@ extension CharactersViewController {
             interactor?.deleteFavorite(request: request)
             
         } else {
-            let request = CharactersPage.InsertFavorite.Request(characterId: id, displayedCharacters: self.displayedCharacters, currentFavorites: favorites)
+            let request = CharactersPage.InsertFavorite.Request(characterId: id, characaterName: cell.characterNameLabel.text ?? "", characterImage: cell.characterImageView.image ?? UIImage(named:"SquareImage")!, displayedCharacters: self.displayedCharacters, currentFavorites: favorites)
             interactor?.insertFavorite(request: request)
         }
         

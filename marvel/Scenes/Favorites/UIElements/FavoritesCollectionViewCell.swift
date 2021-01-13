@@ -9,7 +9,7 @@
 import UIKit
 
 class FavoritesCollectionViewCell: UICollectionViewCell {
-
+    
     // Mark: Outlets
     
     @IBOutlet weak var topMostUIView: UIView!
@@ -22,25 +22,25 @@ class FavoritesCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-          self.setupUI()
-        }
-        
-        func setupUI() {
-            guard let parentView = topMostUIView else { return }
-            clipsToBounds = true
-            parentView.layer.borderWidth = 1
-            parentView.layer.borderColor = UIColor.black.cgColor
-            parentView.layer.cornerRadius = 20
-            favoriteCharacterNameLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
-            favoriteCharacterNameLabel.adjustsFontSizeToFitWidth = true
-            favoriteCharacterImageView.layer.cornerRadius = 12
-        }
-        
-        
+        self.setupUI()
+    }
+    
+    func setupUI() {
+        guard let parentView = topMostUIView else { return }
+        clipsToBounds = true
+        parentView.layer.borderWidth = 1
+        parentView.layer.borderColor = UIColor.black.cgColor
+        parentView.layer.cornerRadius = 20
+        favoriteCharacterNameLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+        favoriteCharacterNameLabel.adjustsFontSizeToFitWidth = true
+        favoriteCharacterImageView.layer.cornerRadius = 12
+    }
+    
+    
     func update(item: FavoritesPage.DisplayedFavoriteCharacter) {
-            self.favoriteCharacterId = item.favoriteCharacterId
-            favoriteCharacterNameLabel.text =  item.favoriteCharacterName
-            favoriteCharacterImageView.image = item.favoriteCharacterImage
-        }
-
+        self.favoriteCharacterId = item.favoriteCharacterId
+        favoriteCharacterNameLabel.text =  item.favoriteCharacterName
+        favoriteCharacterImageView.image = item.favoriteCharacterImage
+    }
+    
 }

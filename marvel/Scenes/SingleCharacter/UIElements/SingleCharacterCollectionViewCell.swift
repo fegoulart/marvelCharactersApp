@@ -16,8 +16,6 @@ class SingleCharacterCollectionViewCell: UICollectionViewCell {
     
     // Mark: Variables
     
-    var production : Production?
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.setupUI()
@@ -34,10 +32,9 @@ class SingleCharacterCollectionViewCell: UICollectionViewCell {
         productionImage.layer.cornerRadius = 12
     }
     
-    func update(item: SingleChracterPage.DisplayedProduction) {
-        self.production = item
+    func update(item: Production) {
         productionName.text = item.name
-        productionImage.download(image: item.imageUrl)
+        productionImage.download(image: item.imageURL)
     }
     
 }

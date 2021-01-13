@@ -6,39 +6,9 @@
 //  Copyright © 2021 Fernando Luiz Goulart. All rights reserved.
 //
 
-/*
- 
- enum FavoritesPage {
- struct DisplayedFavoriteCharacter {
- var favoriteCharacterId: CharacterId
- var favoriteCharacterName: String
- var favoriteCharacterImage: UIImage
- }
- 
- enum FetchPersistedFavorites {
- struct Request {
- 
- }
- 
- struct Response {
- var favorites: [DisplayedFavoriteCharacter]?
- var error: FavoriteErrors?
- }
- 
- struct ViewModel {
- var displayedFavoriteCharacters: [DisplayedFavoriteCharacter]
- var error: FavoriteErrors?
- }
- 
- }
- }
- */
-
 enum SingleCharacterPage {
     struct DisplayedSingleCharacter {
-        var singleCharacterImageURL: String
-        var singleCharacterName: String
-        var singleCharacterDescription: String
+        var singleCharacter: Production?
     }
     
     struct DisplayedSingleCharacterComics {
@@ -49,28 +19,33 @@ enum SingleCharacterPage {
         var singleCharacterSeries: [Production]
     }
     
-    enum FetchSingleCharacter {
-        struct Request {
-            var singleCharacter: Character?
-        }
-        
-        struct Response {
-            var singleCharacter: [DisplayedSingleCharacter]?
-            var error: FavoriteErrors?
-        }
-        
-        struct ViewModel {
-            var singleCharacter: [DisplayedSingleCharacter]?
-            var error: FavoriteErrors?
-        }
-    }
-    
     enum FetchComics {
+        struct Request {
         
+        }
+        struct Response {
+            var comics: Comics?
+            var error: SingleCharacterErrors?
+        }
+        struct ViewModel {
+            var comics: DisplayedSingleCharacterComics
+            var error: SingleCharacterErrors?
+        }
     }
     
     enum FetchSeries {
+       struct Request {
         
+        }
+        struct Response {
+            var series: Series?
+            var error: SingleCharacterErrors?
+        }
+        struct ViewModel {
+            var series: DisplayedSingleCharacterSeries
+            var error: SingleCharacterErrors?
+            
+        }
         
     }
     

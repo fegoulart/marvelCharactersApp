@@ -9,7 +9,7 @@
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SingleCharacter" id="bDG-1T-Unc" customClass="SingleCharacterCollectionViewCell" customModule="marvel" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProductionCell" id="bDG-1T-Unc" customClass="SingleCharacterCollectionViewCell" customModule="marvel" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="u6O-tQ-14z" customClass="SingleCharacterCollectionViewCell" customModule="marvel" customModuleProvider="target">

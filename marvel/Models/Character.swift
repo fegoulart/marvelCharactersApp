@@ -75,7 +75,48 @@ enum ProductionType {
 }
 
 struct Production {
+    let id: Int
     let imageURL: String
     let name: String
     let type: ProductionType
+}
+
+struct Comics: Codable {
+    let code: Int?
+    let status: String?
+    let data: ComicsData?
+}
+
+struct ComicsData: Codable {
+    let offset: Int?
+    let limit: Int?
+    let total: Int?
+    let count: Int?
+    let results: [Comic]?
+}
+
+struct Comic: Codable {
+    let id: Int?
+    let title: String?
+    let thumbnail: Thumbnail?
+}
+
+struct Series: Codable {
+    let code: Int?
+    let status: String?
+    let data: ComicsData?
+}
+
+struct SeriesData: Codable {
+    let offset: Int?
+    let limit: Int?
+    let total: Int?
+    let count: Int?
+    let results: [Comic]?
+}
+
+struct Serie: Codable {
+    let id: Int?
+    let title: String?
+    let thumbnail: Thumbnail?
 }

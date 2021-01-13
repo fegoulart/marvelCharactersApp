@@ -145,10 +145,10 @@
             </objects>
             <point key="canvasLocation" x="833" y="1128"/>
         </scene>
-        <!--View Controller-->
+        <!--Single Character View Controller-->
         <scene sceneID="d3z-bL-uAw">
             <objects>
-                <viewController id="Xd5-5Z-57v" sceneMemberID="viewController">
+                <viewController id="Xd5-5Z-57v" customClass="SingleCharacterViewController" customModule="marvel" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FHS-F7-wfl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -211,16 +211,7 @@
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 </collectionViewFlowLayout>
-                                                <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="mSs-HQ-Rh1">
-                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                        </collectionViewCellContentView>
-                                                    </collectionViewCell>
-                                                </cells>
+                                                <cells/>
                                             </collectionView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -262,12 +253,21 @@
                             <constraint firstItem="E3T-ai-J6z" firstAttribute="width" secondItem="FHS-F7-wfl" secondAttribute="width" id="gk2-I6-pIG"/>
                             <constraint firstAttribute="trailing" secondItem="vP6-aL-VDU" secondAttribute="trailing" id="vN4-vX-phD"/>
                         </constraints>
+                        <connections>
+                            <outlet property="SingleCharacterImageView" destination="Xgp-My-f5o" id="nOv-vd-3XX"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Ff7-35-Afg"/>
+                    <connections>
+                        <outlet property="comicsCollectionView" destination="fkY-Kd-nwz" id="R04-5g-yc1"/>
+                        <outlet property="seriesCollectionView" destination="11H-up-03g" id="ybi-Sy-t8T"/>
+                        <outlet property="singleCharacterDescription" destination="UaH-1y-AQh" id="7Fv-UG-Sq8"/>
+                        <outlet property="singleCharacterImageView" destination="Xgp-My-f5o" id="oxS-QK-zsO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="duX-7K-N9y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="832.79999999999995" y="1969.5652173913045"/>
+            <point key="canvasLocation" x="1006" y="1951"/>
         </scene>
     </scenes>
     <resources>

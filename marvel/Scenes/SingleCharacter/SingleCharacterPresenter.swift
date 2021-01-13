@@ -34,7 +34,7 @@ extension SingleCharacterPresenter {
         guard let comicsArray = comics?.data?.results else { return SingleCharacterPage.DisplayedSingleCharacterComics(singleCharacterComics: [])}
         var productions: [Production] = []
         for comic in comicsArray {
-            let newProduction = Production(id: comic.id!, imageURL: "\(comic.thumbnail?.imagePath ?? "")\(comic.thumbnail?.imageExtension ?? "")", name: comic.title ?? "", type: ProductionType.Comic)
+            let newProduction = Production(id: comic.id!, imageURL: "\(comic.thumbnail?.imagePath ?? "").\(comic.thumbnail?.imageExtension ?? "")", name: comic.title ?? "", type: ProductionType.Comic)
             productions.append(newProduction)
         }
         return SingleCharacterPage.DisplayedSingleCharacterComics(singleCharacterComics: productions)
@@ -45,7 +45,7 @@ extension SingleCharacterPresenter {
         guard let seriesArray = series?.data?.results else { return SingleCharacterPage.DisplayedSingleCharacterSeries(singleCharacterSeries: [])}
         var productions: [Production] = []
         for serie in seriesArray {
-            let newProduction = Production(id: serie.id!, imageURL: "\(serie.thumbnail?.imagePath ?? "")\(serie.thumbnail?.imageExtension ?? "")", name: serie.title ?? "", type: ProductionType.Serie)
+            let newProduction = Production(id: serie.id!, imageURL: "\(serie.thumbnail?.imagePath ?? "").\(serie.thumbnail?.imageExtension ?? "")", name: serie.title ?? "", type: ProductionType.Serie)
             productions.append(newProduction)
         }
         return SingleCharacterPage.DisplayedSingleCharacterSeries(singleCharacterSeries: productions)

@@ -19,16 +19,16 @@ protocol CharactersDisplayLogic: AnyObject {
 
 protocol CharacterCellDelegate: AnyObject {
     func favoriteButtonTapped(cell: CharactersCollectionViewCell)
+    func cellSelected(cell: CharactersCollectionViewCell)
 }
 
 
 final class CharactersViewController: UIViewController, CharactersDisplayLogic, CharacterCellDelegate {
-
     
     
-
+    
+    
     var interactor: CharactersBusinessLogic?
-    //var router: (NSObjectProtocol & CharactersRoutingLogic & CharactersDataPassing)?
     
     // MARK: Outlets
     
@@ -39,6 +39,8 @@ final class CharactersViewController: UIViewController, CharactersDisplayLogic, 
     var displayedCharacters: [CharactersPage.DisplayedCharacter] = []
     var favorites: [CharacterId] = []
     var paginationStatus: CharactersPage.PaginationStatus = CharactersPage.PaginationStatus(offset: 0, limit: 20, total: 0, count: 0)
+    var selectedCharacter: CharactersPage.DisplayedCharacter?
+    var selectedCharacterImage: UIImage?
     
     lazy private var flowLayout: TwoColumnsViewFlowLayout = {
         let layout = TwoColumnsViewFlowLayout()
@@ -112,6 +114,14 @@ extension CharactersViewController {
         }
         
     }
+    
+    func cellSelected(cell: CharactersCollectionViewCell) {
+        guard let image = cell.characterImageView.image, let indexPath = cell.indexPath else { return }
+        self.selectedCharacterImage = image
+        let selectedCharacter = self.displayedCharacters[indexPath]
+        self.selectedCharacter = CharactersPage.DisplayedCharacter(characterId: selectedCharacter.characterId, characterName: selectedCharacter.characterName, characterImageURL: selectedCharacter.characterImageURL, description: selectedCharacter.description, isFavorite: selectedCharacter.isFavorite)
+        performSegue(withIdentifier: "singleCharacterSegue", sender: self)
+    }
 }
 
 // MARK: Fetch characters on screen load
@@ -132,11 +142,11 @@ extension CharactersViewController {
     }
     
     private func setUpCharactersDisplay(viewModel: CharactersPage.FetchCharacters.ViewModel) {
-        //TODO: Error treatment
-        //        guard viewModel.error == nil else {
-        //            Alert.showUnableToRetrieveDataAlert(on: self)
-        //            return
-        //        }
+        
+        guard viewModel.error == nil else {
+            Alert.showUnableToRetrieveDataAlert(on: self)
+            return
+        }
         displayedCharacters = viewModel.displayedCharacters
         favorites = viewModel.favorites
         paginationStatus = viewModel.paginationStatus
@@ -160,11 +170,10 @@ extension CharactersViewController {
     }
     
     private func setUpNewCharactersDisplay(viewModel: CharactersPage.FetchNextCharacters.ViewModel) {
-        //TODO: Error treatment
-        //        guard viewModel.error == nil else {
-        //            Alert.showUnableToRetrieveDataAlert(on: self)
-        //            return
-        //        }
+        guard viewModel.error == nil else {
+            Alert.showUnableToRetrieveDataAlert(on: self)
+            return
+        }
         displayedCharacters += viewModel.displayedCharacters
         paginationStatus = viewModel.paginationStatus
         charactersCollectionView.reloadData()
@@ -233,7 +242,7 @@ extension CharactersViewController: UICollectionViewDelegate, UICollectionViewDa
         
         let character = self.displayedCharacters[indexPath.row]
         cell.cellDelegate = self
-        cell.update(item: character)
+        cell.update(item: character, indexPath: indexPath.row)
         return cell
     }
     
@@ -245,7 +254,25 @@ extension CharactersViewController: UICollectionViewDelegate, UICollectionViewDa
         return self.displayedCharacters.count < self.paginationStatus.total
     }
     
+
+    
+    
 }
+
+// MARK: - Routing
+
+extension CharactersViewController {
+    // MARK: Prepare for segue
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "singleCharacterSegue" {
+            guard let selected = self.selectedCharacter  else { return }
+            let destinationVC = segue.destination as! SingleCharacterViewController
+            destinationVC.displayedSingleCharacter = SingleCharacterPage.DisplayedSingleCharacter(singleCharacterId: selected.characterId, singleCharacterName: selected.characterName, singleCharacterDescription: selected.description, singleCharacterImage: selectedCharacterImage ?? UIImage(named: "SquareImage")!  )
+        }
+    }
+}
+
 
 // MARK: - SkeletonCollectionViewDataSource
 
@@ -269,13 +296,9 @@ private extension CharactersViewController {
         let viewController = self
         let interactor = CharactersInteractor()
         let presenter = CharactersPresenter()
-        //let router = CharactersRouter()
         viewController.interactor = interactor
-        //viewController.router = router
         interactor.presenter = presenter
         presenter.viewController = viewController
-        //router.viewController = viewController
-        //router.dataStore = interactor
     }
     
     func setupUI() {

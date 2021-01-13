@@ -10,12 +10,14 @@ import Moya
 
 enum CharacterAPI {
     case getAllCharacters(limit: Int?, offset: Int?)
-    case getCharacter(characterId: Int)
+    case getAllComics(characterId: Int)
+    case getAllSeries(characterId: Int)
 }
 
 extension CharacterAPI: TargetType {
     
-
+    
+    
     var headers: [String: String]? {
         return ["Content-type": "application/json"]
     }
@@ -24,21 +26,23 @@ extension CharacterAPI: TargetType {
         switch self {
         case .getAllCharacters:
             return "characters"
-        case .getCharacter(let characterId):
-            return "characters/\(characterId)"
+        case .getAllComics(let characterId):
+            return "characters/\(characterId)/comics"
+        case .getAllSeries(let characterId):
+            return "characters/\(characterId)/series"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case.getAllCharacters, .getCharacter:
+        case.getAllCharacters, .getAllComics, .getAllSeries:
             return .get
         }
     }
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .getAllCharacters, .getCharacter:
+        case .getAllCharacters, .getAllComics, .getAllSeries:
             return URLEncoding.default 
         }
     }
@@ -49,13 +53,17 @@ extension CharacterAPI: TargetType {
             var params: [String: Any] = [:]
             params["limit"] = limit
             params["offset"] = offset
-            params["ts"] = 1609424333.442628
-            params["apikey"] = "2f63d6c20dbbf54179db421f8af36bf4"
-            params["hash"] = "bc28cae76267fa2378b2d26280a8fe9c"
+            params["ts"] = APIConfig.ts
+            params["apikey"] = APIConfig.apikey
+            params["hash"] = APIConfig.hash
             params["orderBy"]="name"
             return .requestParameters(parameters: params, encoding: URLEncoding.default)
-        case .getCharacter:
-            return .requestPlain
+        case .getAllComics, .getAllSeries:
+            var params: [String: Any] = [:]
+            params["ts"] = APIConfig.ts
+            params["apikey"] = APIConfig.apikey
+            params["hash"] = APIConfig.hash
+            return .requestParameters(parameters: params, encoding: URLEncoding.default)
         }
     }
     

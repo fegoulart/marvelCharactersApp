@@ -21,15 +21,20 @@ final class SingleCharacterViewController: UIViewController, SingleCharacterDisp
     // MARK: Outlets
     
     @IBOutlet weak var singleCharacterImageView: UIImageView!
-    
     @IBOutlet weak var singleCharacterDescription: UILabel!
     @IBOutlet weak var comicsCollectionView: UICollectionView!
     @IBOutlet weak var seriesCollectionView: UICollectionView!
     
     // MARK: Variables
     var displayedSingleCharacter: SingleCharacterPage.DisplayedSingleCharacter?
+    
     var displayedComics: [Production]?
     var displayedSeries: [Production]?
+    
+    private let sectionInsets = UIEdgeInsets(top: 2.0,
+                                             left: 10.0,
+                                             bottom: 2.0,
+                                             right: 10.0)
     
     // Object lifecycle
     
@@ -67,8 +72,10 @@ final class SingleCharacterViewController: UIViewController, SingleCharacterDisp
 extension SingleCharacterViewController {
     
     func fetchComics() {
-        let request = SingleCharacterPage.FetchComics.Request()
+        guard let characterId = self.displayedSingleCharacter?.singleCharacterId else { return }
+        let request = SingleCharacterPage.FetchComics.Request(charactedId: characterId)
         interactor?.fetchComics(request: request)
+        
     }
     
     func displayComics(viewModel: SingleCharacterPage.FetchComics.ViewModel) {
@@ -80,7 +87,7 @@ extension SingleCharacterViewController {
             Alert.showUnableToRetrieveDataAlert(on: self)
             return
         }
-        displayedComics = viewModel.comics.singleCharacterComics
+        displayedComics = viewModel.comics?.singleCharacterComics ?? []
         comicsCollectionView.reloadData()
     }
 }
@@ -91,7 +98,8 @@ extension SingleCharacterViewController {
 extension SingleCharacterViewController {
     
     func fetchSeries() {
-        let request = SingleCharacterPage.FetchSeries.Request()
+        guard let characterId = self.displayedSingleCharacter?.singleCharacterId else { return }
+        let request = SingleCharacterPage.FetchSeries.Request(characterId: characterId)
         interactor?.fetchSeries(request: request)
     }
     
@@ -104,14 +112,14 @@ extension SingleCharacterViewController {
             Alert.showUnableToRetrieveDataAlert(on: self)
             return
         }
-        displayedSeries = viewModel.series.singleCharacterSeries
+        displayedSeries = viewModel.series?.singleCharacterSeries ?? []
         seriesCollectionView.reloadData()
     }
 }
 
 // MARK: - Collection view delegates
 
-extension SingleCharacterViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension SingleCharacterViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.comicsCollectionView {
             return displayedComics?.count ?? 0
@@ -129,7 +137,7 @@ extension SingleCharacterViewController: UICollectionViewDelegate, UICollectionV
             
             guard displayedComics != nil else { return UICollectionViewCell()}
             
-            guard let cell = comicsCollectionView.dequeueReusableCell(withReuseIdentifier: "ComicsCell", for: indexPath) as? SingleCharacterCollectionViewCell, !displayedComics!.isEmpty else {
+            guard let cell = comicsCollectionView.dequeueReusableCell(withReuseIdentifier: "ProductionCell", for: indexPath) as? SingleCharacterCollectionViewCell, !displayedComics!.isEmpty else {
                 return UICollectionViewCell()
             }
             let comic = self.displayedComics![indexPath.row]
@@ -139,7 +147,7 @@ extension SingleCharacterViewController: UICollectionViewDelegate, UICollectionV
             if collectionView == seriesCollectionView {
                 guard displayedSeries != nil else { return UICollectionViewCell()}
                 
-                guard let cell = seriesCollectionView.dequeueReusableCell(withReuseIdentifier: "SeriesCell", for: indexPath) as? SingleCharacterCollectionViewCell, !displayedSeries!.isEmpty else {
+                guard let cell = seriesCollectionView.dequeueReusableCell(withReuseIdentifier: "ProductionCell", for: indexPath) as? SingleCharacterCollectionViewCell, !displayedSeries!.isEmpty else {
                     return UICollectionViewCell()
                 }
                 let serie = self.displayedSeries![indexPath.row]
@@ -150,7 +158,27 @@ extension SingleCharacterViewController: UICollectionViewDelegate, UICollectionV
         return UICollectionViewCell()
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let itemsPerColumn = CGFloat(1)
+        let paddingSpace = sectionInsets.top * (itemsPerColumn + 1)
+        let availableHeight = CGFloat(150) - paddingSpace //150 is the fixed collectionview height
+        let heightPerItem = availableHeight / itemsPerColumn
+        
+        return CGSize(width: heightPerItem, height: heightPerItem)
+    }
     
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return sectionInsets
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return sectionInsets.left
+    }
     
 }
 
@@ -167,23 +195,27 @@ private extension SingleCharacterViewController {
     func setupUI() {
         let nav = self.navigationController?.navigationBar
         nav?.isTranslucent = false
-        title = "<hero name here>"
+        title = self.displayedSingleCharacter?.singleCharacterName
         view.backgroundColor = .white
         definesPresentationContext = true
         setupCollectionView()
+        singleCharacterImageView.image = self.displayedSingleCharacter?.singleCharacterImage
+        singleCharacterDescription.text = self.displayedSingleCharacter?.singleCharacterDescription ?? ""
         extendedLayoutIncludesOpaqueBars = true
         
     }
     
-    
     private func setupCollectionView() {
         comicsCollectionView.delegate = self
         comicsCollectionView.dataSource = self
-        comicsCollectionView.register(UINib(nibName: "SingleCharacterColletionViewCell", bundle: nil), forCellWithReuseIdentifier: "ProductionCell")
+        comicsCollectionView.register(UINib(nibName:  "SingleCharacterCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ProductionCell")
+        //comicsCollectionView.frameLayoutGuid
         
         seriesCollectionView.delegate = self
         seriesCollectionView.dataSource = self
-        seriesCollectionView.register(UINib(nibName: "SingleCharacterColletionViewCell", bundle: nil), forCellWithReuseIdentifier: "ProductionCell")
+        seriesCollectionView.register(UINib(nibName:  "SingleCharacterCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ProductionCell")
+        
         
     }
+    
 }

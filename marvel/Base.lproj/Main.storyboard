@@ -80,11 +80,12 @@
                     <navigationItem key="navigationItem" title="Characters" id="QFi-90-iMO"/>
                     <connections>
                         <outlet property="charactersCollectionView" destination="O7N-8d-K6Q" id="etL-yO-zVi"/>
+                        <segue destination="Xd5-5Z-57v" kind="show" identifier="singleCharacterSegue" id="ttI-wc-fFH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfb-vg-RV4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1764" y="369.26536731634184"/>
+            <point key="canvasLocation" x="1847" y="367"/>
         </scene>
         <!--Characters-->
         <scene sceneID="dwf-j6-a9E">
@@ -138,7 +139,6 @@
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="RXk-Gg-V5d" kind="relationship" relationship="rootViewController" id="6hU-H5-mm7"/>
-                        <segue destination="Xd5-5Z-57v" kind="show" id="1fn-YH-vN9"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ba5-jP-nwq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -150,11 +150,11 @@
             <objects>
                 <viewController id="Xd5-5Z-57v" customClass="SingleCharacterViewController" customModule="marvel" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FHS-F7-wfl">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vP6-aL-VDU">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E3T-ai-J6z">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
@@ -168,7 +168,7 @@
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UaH-1y-AQh">
                                                 <rect key="frame" x="20" y="190" width="335" height="158"/>
-                                                <mutableString key="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</mutableString>
+                                                <string key="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -180,10 +180,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fkY-Kd-nwz">
-                                                <rect key="frame" x="20" y="402.5" width="335" height="120"/>
+                                                <rect key="frame" x="20" y="402.5" width="335" height="150"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="120" id="Hmj-ww-WAB"/>
+                                                    <constraint firstAttribute="height" constant="150" id="Hmj-ww-WAB"/>
                                                 </constraints>
                                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="CRs-AG-mSS">
                                                     <size key="itemSize" width="50" height="50"/>
@@ -194,16 +194,16 @@
                                                 <cells/>
                                             </collectionView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Series" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxL-uG-kF9">
-                                                <rect key="frame" x="20" y="542.5" width="41" height="16"/>
+                                                <rect key="frame" x="20" y="572.5" width="41" height="16"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="11H-up-03g">
-                                                <rect key="frame" x="20" y="574.5" width="335" height="120"/>
+                                                <rect key="frame" x="20" y="604.5" width="335" height="150"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="120" id="1Q7-Lj-c8J"/>
+                                                    <constraint firstAttribute="height" constant="150" id="1Q7-Lj-c8J"/>
                                                 </constraints>
                                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="irD-M8-xkI">
                                                     <size key="itemSize" width="50" height="50"/>
@@ -253,21 +253,19 @@
                             <constraint firstItem="E3T-ai-J6z" firstAttribute="width" secondItem="FHS-F7-wfl" secondAttribute="width" id="gk2-I6-pIG"/>
                             <constraint firstAttribute="trailing" secondItem="vP6-aL-VDU" secondAttribute="trailing" id="vN4-vX-phD"/>
                         </constraints>
-                        <connections>
-                            <outlet property="SingleCharacterImageView" destination="Xgp-My-f5o" id="nOv-vd-3XX"/>
-                        </connections>
+                        <viewLayoutGuide key="safeArea" id="Kbb-TA-tDA"/>
                     </view>
                     <navigationItem key="navigationItem" id="Ff7-35-Afg"/>
                     <connections>
                         <outlet property="comicsCollectionView" destination="fkY-Kd-nwz" id="R04-5g-yc1"/>
                         <outlet property="seriesCollectionView" destination="11H-up-03g" id="ybi-Sy-t8T"/>
                         <outlet property="singleCharacterDescription" destination="UaH-1y-AQh" id="7Fv-UG-Sq8"/>
-                        <outlet property="singleCharacterImageView" destination="Xgp-My-f5o" id="oxS-QK-zsO"/>
+                        <outlet property="singleCharacterImageView" destination="Xgp-My-f5o" id="IXB-hP-aei"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="duX-7K-N9y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1006" y="1951"/>
+            <point key="canvasLocation" x="2746" y="368"/>
         </scene>
     </scenes>
     <resources>

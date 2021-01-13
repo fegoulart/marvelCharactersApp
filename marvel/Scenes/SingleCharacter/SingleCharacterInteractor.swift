@@ -29,7 +29,7 @@ class SingleCharacterInteractor: SingleCharacterBusinessLogic, SingleCharacterDa
     
     func fetchComics(request: SingleCharacterPage.FetchComics.Request) {
         var response: SingleCharacterPage.FetchComics.Response!
-        self.worker.singleCharacterDataManager.getAllComics().done {
+        self.worker.singleCharacterDataManager.getAllComics(characterId: request.charactedId ).done {
             comics in
             
             self.comics = comics
@@ -46,7 +46,7 @@ class SingleCharacterInteractor: SingleCharacterBusinessLogic, SingleCharacterDa
     func fetchSeries(request: SingleCharacterPage.FetchSeries.Request) {
          var response: SingleCharacterPage.FetchSeries.Response!
         
-        self.worker.singleCharacterDataManager.getAllSeries().done {
+        self.worker.singleCharacterDataManager.getAllSeries(characterId: request.characterId).done {
             series in
             self.series = series
             response = SingleCharacterPage.FetchSeries.Response(series: series, error: nil)

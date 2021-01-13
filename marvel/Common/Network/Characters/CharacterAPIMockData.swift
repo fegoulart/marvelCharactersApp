@@ -13,8 +13,10 @@ extension CharacterAPI {
         switch self {
         case .getAllCharacters:
             return stubbedResponse("Characters")
-        case .getCharacter:
-            return stubbedResponse("Character")
+        case .getAllSeries:
+            return stubbedResponse("Series")
+        case .getAllComics:
+            return stubbedResponse("Comics")
         }
     }
 }

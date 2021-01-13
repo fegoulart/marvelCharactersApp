@@ -23,18 +23,18 @@ extension SingleCharacterNetworkInjected {
 }
 
 protocol SingleCharacterDataManager: AnyObject {
-    func getAllComics(limit: Int?, offset: Int?, test: Bool, debugMode: Bool) -> Promise<Comics>
-    func getAllSeries(limit: Int?, offset: Int?, test: Bool, debugMode: Bool) -> Promise<Series>
+    func getAllComics(characterId: Int, limit: Int?, offset: Int?, test: Bool, debugMode: Bool) -> Promise<Comics>
+    func getAllSeries(characterId: Int, limit: Int?, offset: Int?, test: Bool, debugMode: Bool) -> Promise<Series>
 }
 
 extension SingleCharacterDataManager {
     
-    func getAllComics(limit: Int? = nil, offset: Int? = nil, test: Bool = false, debugMode: Bool = false) -> Promise<Comics> {
-        return getAllComics(limit: limit, offset: offset, test: test, debugMode: debugMode)
+    func getAllComics(characterId: Int, limit: Int? = nil, offset: Int? = nil, test: Bool = false, debugMode: Bool = false) -> Promise<Comics> {
+        return getAllComics(characterId: characterId, limit: limit, offset: offset, test: test, debugMode: debugMode)
     }
     
-    func getAllSeries(limit: Int? = nil, offset: Int? = nil, test: Bool = false, debugMode: Bool = false) -> Promise<Series> {
-        return getAllSeries(limit: limit, offset: offset, test: test, debugMode: debugMode)
+    func getAllSeries(characterId: Int, limit: Int? = nil, offset: Int? = nil, test: Bool = false, debugMode: Bool = false) -> Promise<Series> {
+        return getAllSeries(characterId: characterId, limit: limit, offset: offset, test: test, debugMode: debugMode)
     }
     
 }
@@ -43,13 +43,12 @@ extension SingleCharacterDataManager {
 final class SingleCharacterNetworkManager: SingleCharacterDataManager {
 
     
-//    func getAllCharacters(limit: Int?, offset: Int?, test:Bool,  debugMode: Bool) -> Promise<Characters> {
-//        return APIManager.callApi(CharacterAPI.getAllCharacters(limit: limit, offset: offset), dataReturnType: Characters.self, test: test, debugMode: debugMode)
-//    }
-//
-//    func getCharacter(characterId: CharacterId, test: Bool, debugMode: Bool) -> Promise<Character> {
-//        return APIManager.callApi(CharacterAPI.getCharacter(characterId: characterId), dataReturnType: Character.self, test: test, debugMode: debugMode)
-//    }
+    func getAllComics(characterId: Int, limit: Int? = nil, offset: Int? = nil, test: Bool = false, debugMode: Bool = false) -> Promise<Comics> {
+        return APIManager.callApi(CharacterAPI.getAllComics(characterId: characterId), dataReturnType: Comics.self, test: test, debugMode: debugMode)
+    }
     
+    func getAllSeries(characterId: Int, limit: Int? = nil, offset: Int? = nil, test: Bool = false, debugMode: Bool = false) -> Promise<Series> {
+        return APIManager.callApi(CharacterAPI.getAllSeries(characterId: characterId), dataReturnType: Series.self, test: test, debugMode: debugMode)
+    }
     
 }

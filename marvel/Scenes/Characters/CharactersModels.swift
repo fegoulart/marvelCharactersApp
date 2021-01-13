@@ -15,6 +15,7 @@ enum CharactersPage {
         var characterId: CharacterId
         var characterName: String
         var characterImageURL: String
+        var description: String
         var isFavorite: Bool
     }
     

@@ -20,6 +20,7 @@ class CharactersCollectionViewCell: UICollectionViewCell {
     weak var cellDelegate: CharacterCellDelegate?
     var characterId: CharacterId?
     var isFavorite: Bool = false
+    var indexPath: Int?
     
     
     override func awakeFromNib() {
@@ -36,11 +37,13 @@ class CharactersCollectionViewCell: UICollectionViewCell {
         characterNameLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         characterNameLabel.adjustsFontSizeToFitWidth = true
         characterImageView.layer.cornerRadius = 12
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        topMostUIView.addGestureRecognizer(tap)
         
     }
     
     
-    func update(item: CharactersPage.DisplayedCharacter) {
+    func update(item: CharactersPage.DisplayedCharacter, indexPath: Int) {
         self.characterId = item.characterId
         characterNameLabel.text =  item.characterName
         characterImageView.download(image: item.characterImageURL)
@@ -51,11 +54,16 @@ class CharactersCollectionViewCell: UICollectionViewCell {
             favoriteButton.isSelected = false
             self.isFavorite = false
         }
+        self.indexPath = indexPath
     }
     
     
     @IBAction func FavoriteUIButtonAction(_ sender: UIButton) {
         self.cellDelegate?.favoriteButtonTapped(cell: self)
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        self.cellDelegate?.cellSelected(cell: self)
     }
     
     

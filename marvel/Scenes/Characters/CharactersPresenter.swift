@@ -92,8 +92,9 @@ extension CharactersPresenter {
                 }
                 let characterName = character.name
                 let characterImageUrl = "\(character.thumbnail.imagePath).\(character.thumbnail.imageExtension)"
+                let characterDescription = character.description
                 
-                let displayedCharacter = CharactersPage.DisplayedCharacter(characterId: characterId, characterName: characterName, characterImageURL: characterImageUrl, isFavorite: isFavorite)
+                let displayedCharacter = CharactersPage.DisplayedCharacter(characterId: characterId, characterName: characterName, characterImageURL: characterImageUrl, description: characterDescription, isFavorite: isFavorite)
                 displayedCharacters.append(displayedCharacter)
             }
         }
@@ -113,8 +114,9 @@ extension CharactersPresenter {
                 }
                 let characterName = character.characterName
                 let characterImageUrl = character.characterImageURL
+                let characterDescription = character.description
                 
-                let displayedCharacter = CharactersPage.DisplayedCharacter(characterId: characterId, characterName: characterName, characterImageURL: characterImageUrl, isFavorite: isFavorite)
+                let displayedCharacter = CharactersPage.DisplayedCharacter(characterId: characterId, characterName: characterName, characterImageURL: characterImageUrl, description: characterDescription, isFavorite: isFavorite)
                 displayedCharacters.append(displayedCharacter)
             }
         }
